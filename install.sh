@@ -31,7 +31,10 @@ read -s -p "Enter user password, or press enter to use defaults: " user_password
 if [[ -z $user_password ]]; then
     user_password=csjarchlinux
 fi
-
+read -s -p "Enter temp user password, or press enter to use defaults: " temp_password
+if [[ -z $temp_password ]]; then
+    user_password=csjarchlinux
+fi
 read -s -p "Enter root password, or press enter to use defaults: " root_password
 if [[ -z $root_password ]]; then
     root_password=csjarchlinux
@@ -190,6 +193,7 @@ echo -en "$root_password\n$root_password" | passwd
 echo -en "$user_password\n$user_password" | passwd $username
 
 useradd -g users -G wheel -m temp
+echo -en "$temp_password\n$temp_password" | passwd temp
 sudo -u temp mkdir -p /tmp/yay && cd /tmp/yay && sudo -u temp git clone https://aur.archlinux.org/yay.git && cd yay && sudo -u temp makepkg -si --noconfirm
 sudo -u temp mkdir -p /tmp/epson && cd /tmp/epson && sudo -u temp git clone https://aur.archlinux.org/epson-inkjet-printer-escpr.git && cd epson && sudo -u temp makepkg -si --noconfirm
 sudo -u temp mkdir -p /tmp/ttf-ms-fonts && cd /tmp/ttf-ms-fonts && sudo -u temp git clone https://aur.archlinux.org/ttf-ms-fonts.git && cd ttf-ms-fonts && sudo -u temp makepkg -si --noconfirm
