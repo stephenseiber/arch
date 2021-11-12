@@ -31,10 +31,7 @@ read -s -p "Enter user password, or press enter to use defaults: " user_password
 if [[ -z $user_password ]]; then
     user_password=csjarchlinux
 fi
-read -s -p "Enter temp user password, or press enter to use defaults: " temp_password
-if [[ -z $temp_password ]]; then
-    user_password=csjarchlinux
-fi
+
 read -s -p "Enter root password, or press enter to use defaults: " root_password
 if [[ -z $root_password ]]; then
     root_password=csjarchlinux
@@ -180,8 +177,7 @@ echo -e "::1\t\tlocalhost" >> /etc/hosts
 echo -e "127.0.1.1\t$hostname.localdomain\t$hostname" >> /etc/hosts
 
 echo -e "KEYMAP=$keymap" > /etc/vconsole.conf
-echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
-echo "Defaults !tty_tickets" >> /etc/sudoers
+sed -i "s/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g" /etc/sudoers
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf
 sed -i "s/#Color/Color/g" /etc/pacman.conf
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf
@@ -193,7 +189,6 @@ echo -en "$root_password\n$root_password" | passwd
 echo -en "$user_password\n$user_password" | passwd $username
 
 useradd -g users -G wheel -m temp
-echo -en "$temp_password\n$temp_password" | passwd temp
 sudo -u temp mkdir -p /tmp/yay && cd /tmp/yay && sudo -u temp git clone https://aur.archlinux.org/yay.git && cd yay && sudo -u temp makepkg -si --noconfirm
 sudo -u temp mkdir -p /tmp/epson && cd /tmp/epson && sudo -u temp git clone https://aur.archlinux.org/epson-inkjet-printer-escpr.git && cd epson && sudo -u temp makepkg -si --noconfirm
 sudo -u temp mkdir -p /tmp/ttf-ms-fonts && cd /tmp/ttf-ms-fonts && sudo -u temp git clone https://aur.archlinux.org/ttf-ms-fonts.git && cd ttf-ms-fonts && sudo -u temp makepkg -si --noconfirm
