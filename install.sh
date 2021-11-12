@@ -105,7 +105,7 @@ pacstrap -i /mnt base base-devel linux linux-firmware git nano fish \
     libreoffice-fresh qbittorrent \
     vivaldi vivaldi-ffmpeg-codecs \
     jre8-openjdk jre11-openjdk jre-openjdk \
-    system-config-printer cups vlc discord neofetch gparted \
+    system-config-printer cups vlc discord neofetch apparmor gparted \
     exfat-utils
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
@@ -141,7 +141,7 @@ cd /tmp && touch panel-restart && echo '#!/bin/bash' > panel-restart && echo 'ki
 touch reflector-update && echo '#!/bin/bash' > reflector-update && echo 'sudo reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6' >> reflector-update && chmod +x reflector-update && mv reflector-update /usr/bin
 userdel -r
 
-systemctl enable NetworkManager.service fstrim.timer sddm bluetooth cups
+systemctl enable NetworkManager fstrim.timer sddm bluetooth cups apparmor
 
 journalctl --vacuum-size=100M --vacuum-time=2weeks
 
