@@ -207,7 +207,7 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_boot})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nvidia-drm.modeset=1 nmi_watchdog=0 quiet rw
+options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nvidia-drm.modeset=1 nmi_watchdog=0 quiet rw
 END
 
 chsh -s /bin/fish
