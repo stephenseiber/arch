@@ -95,75 +95,21 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 pacstrap -i /mnt base base-devel linux linux-firmware git nano fish \
-    intel-ucode \
-    networkmanager \
-    efibootmgr \
-    btrfs-progs \
-    neovim \
-    zram-generator \
-    zsh \
-    pipewire-pulse \
-    bluez \
-    bluez-utils \
-    gnu-free-fonts \
-    ttf-droid \
-    pavucontrol \
-    ntfs-3g \
-    openssh \
-    python-pip \
-    wget \
-    reflector \
-    nvidia \
-    lib32-nvidia-utils \
-    nvidia-utils \
-    lib32-opencl-nvidia \
-    nvidia-settings \
-    lib32-vkd3d \
-    vkd3d \
-    nvidia-prime \
-    opencl-nvidia \
-    steam-native-runtime \
-    ppsspp \
-    nvtop \
-    vulkan-tools \
-    wine-staging \
-    lutris \
-    winetricks \
-    plasma-meta \
-    knotes \
-    plasma-wayland-session \
-    kde-utilities-meta \
-    kde-system-meta \
-    packagekit-qt5 \
-    fwupd \
-    flatpak \
-    spectacle \
-    libreoffice-fresh \
-    qbittorrent \
-    vivaldi \
-    vivaldi-ffmpeg-codecs \
-    thunderbird \
-    jre8-openjdk \
-    jre11-openjdk \
-    jre-openjdk \
-    system-config-printer \
-    cups \
-    vlc \
-    discord \
-    neofetch \
-    gparted \
-    kmail \
+    intel-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator zsh \
+    pipewire-pulse bluez bluez-utils \
+    gnu-free-fonts ttf-droid \
+    pavucontrol ntfs-3g openssh python-pip wget reflector \
+    nvidia lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia nvidia-settings lib32-vkd3d vkd3d nvidia-prime opencl-nvidia \
+    steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks \
+    plasma-meta knotes plasma-wayland-session kde-utilities-meta kde-system-meta packagekit-qt5 fwupd kmail flatpak spectacle \
+    libreoffice-fresh qbittorrent \
+    vivaldi vivaldi-ffmpeg-codecs \
+    jre8-openjdk jre11-openjdk jre-openjdk \
+    system-config-printer cups vlc discord neofetch gparted \
     exfat-utils
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
-
-
-
-
-
-
-
 
 timedatectl set-ntp true
 ln -sf /usr/share/zoneinfo/$(curl -s http://ip-api.com/line?fields=timezone) /etc/localtime &>/dev/null
@@ -174,7 +120,6 @@ locale-gen
 
 echo -e "127.0.0.1\tlocalhost" > /etc/hosts
 echo -e "::1\t\tlocalhost" >> /etc/hosts
-echo -e "127.0.1.1\t$hostname.localdomain\t$hostname" >> /etc/hosts
 
 echo -e "KEYMAP=$keymap" > /etc/vconsole.conf
 sed -i "s/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g" /etc/sudoers
@@ -196,10 +141,7 @@ cd /tmp && touch panel-restart && echo '#!/bin/bash' > panel-restart && echo 'ki
 touch reflector-update && echo '#!/bin/bash' > reflector-update && echo 'sudo reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6' >> reflector-update && chmod +x reflector-update && mv reflector-update /usr/bin
 userdel -r
 
-systemctl enable NetworkManager.service fstrim.timer
-systemctl enable sddm
-systemctl enable bluetooth
-systemctl enable cups
+systemctl enable NetworkManager.service fstrim.timer sddm bluetooth cups
 
 journalctl --vacuum-size=100M --vacuum-time=2weeks
 
@@ -268,23 +210,6 @@ initrd /initramfs-linux.img
 options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_boot})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nvidia-drm.modeset=1 nmi_watchdog=0 quiet rw
 END
 
-touch /boot/loader/entries/arch-zen.conf
-tee -a /boot/loader/entries/arch-zen.conf << END
-title Arch Linux Zen
-linux /vmlinuz-linux-zen
-initrd /intel-ucode.img
-initrd /initramfs-linux-zen.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_boot})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nvidia-drm.modeset=1 nmi_watchdog=0 quiet rw
-END
-
-touch /boot/loader/entries/arch-lts.conf
-tee -a /boot/loader/entries/arch-lts.conf << END
-title Arch Linux LTS
-linux /vmlinuz-linux-lts
-initrd /intel-ucode.img
-initrd /initramfs-linux-lts.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_boot})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nvidia-drm.modeset=1 nmi_watchdog=0 quiet rw
-END
 chsh -s /bin/fish
 pacman-key --init
 pacman-key --populate archlinux
