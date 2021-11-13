@@ -7,8 +7,6 @@ set -u  # Treat unset variables as an error when substituting
 
 ## This are the defaults, so it's easier to test the script
 # keymap=us
-# countrycode=US
-# ipv=ipv6
 # username=csjarchlinux  # Can only be lowercase and no signs
 # hostname=desktop
 # user_password=csjarchlinux
@@ -17,17 +15,6 @@ set -u  # Treat unset variables as an error when substituting
 read -p "Enter keymap, or press enter to use defaults: " keymap
 if [[ -z $keymap ]]; then
     keymap=us
-fi
-
-read -p "Enter country code, or press enter to use defaults: " countrycode
-if [[ -z $countrycode ]]; then
-    countrycode=US
-fi
-
-read -p "Do you have ipv6, or press enter to use defaults: " yes
-if [[ -z $yes ]] || [[ $yes = 'yes' ]]; then
-    ipv=ipv6 ;
-    else ipv=ipv4 ;
 fi
 
 read -p "Enter user name, or press enter to use defaults: " username
@@ -103,7 +90,7 @@ sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf # multilib
 read -p "Do you want to update and sync the mirrors before proceeding?" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c $countrycode --$ipv
+    reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6
     pacman -Syy
 fi
 
