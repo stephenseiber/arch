@@ -3,7 +3,7 @@ if [[ -z $part ]]; then
     part=yes
 fi
 
-if $part=no then
+if $part=no; then
   echo success
 else
 echo failure
