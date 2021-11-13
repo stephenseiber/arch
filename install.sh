@@ -144,7 +144,7 @@ pacstrap -i /mnt base base-devel linux linux-firmware git nano fish \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
     nvidia lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia nvidia-settings lib32-vkd3d vkd3d nvidia-prime opencl-nvidia \
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks \
-    plasma-meta knotes plasma-wayland-session kde-utilities-meta kde-system-meta packagekit-qt5 fwupd kmail flatpak spectacle \
+    plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
     libreoffice-fresh qbittorrent \
     vivaldi vivaldi-ffmpeg-codecs \
     jre8-openjdk jre11-openjdk jre-openjdk \
