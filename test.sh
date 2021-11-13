@@ -8,3 +8,12 @@ if $part=no; then
 else
 echo failure
 fi
+if ping -q -c 1 -W 1 2001:4860:4860::8888 >/dev/null; then
+  ipv=ipv6
+else
+  if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
+  ipv=ipv4
+else
+  echo "not online" 
+fi
+fi
