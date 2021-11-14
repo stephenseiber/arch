@@ -192,7 +192,7 @@ touch /etc/systemd/zram-generator.conf
 tee -a /etc/systemd/zram-generator.conf << END
 [zram0]
 zram-fraction = 1
-max-zram-size = 2048
+max-zram-size = 4096
 END
 
 touch /etc/sysctl.d/99-swappiness.conf
