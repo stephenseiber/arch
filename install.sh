@@ -185,7 +185,7 @@ cd /tmp && touch panel-restart && echo '#!/bin/bash' > panel-restart && echo 'ki
 touch reflector-update && echo '#!/bin/bash' > reflector-update && echo 'sudo reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6' >> reflector-update && chmod +x reflector-update && mv reflector-update /usr/bin
 userdel -r temp
 
-systemctl enable systemctl enable NetworkManager fstrim.timer sddm bluetooth cups apparmor snapper-timeline.timer snapper-cleanup.timer 
+systemctl enable NetworkManager fstrim.timer sddm bluetooth cups apparmor snapper-timeline.timer snapper-cleanup.timer 
 
 snapper -c root --no-dbus create-config /
 snapper -c home --no-dbus create-config /home
