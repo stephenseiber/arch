@@ -123,8 +123,6 @@ else
     mount ${part_boot} /mnt/boot  # Mount the boot partition
 fi
 
-timedatectl set-ntp true  # Synchronize motherboard clock
-
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
