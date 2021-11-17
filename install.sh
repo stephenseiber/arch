@@ -279,4 +279,11 @@ pacman-key --init
 pacman-key --populate archlinux
 pip install requests vdf
 EOF
-umount -R /mnt
+
+read -p "Do you wish to reboot? type y for yes"$'\n' -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+echo "thank you for using csjarchlinux installer script"
+reboot
+else echo "thank you for using csjarchlinux installer script"
+fi
