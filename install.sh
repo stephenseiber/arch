@@ -10,17 +10,11 @@ set -u  # Treat unset variables as an error when substituting
 # part=yes
 # username=csjarchlinux  # Can only be lowercase and no signs
 # hostname=desktop
-# user_password=csjarchlinux
-# root_password=csjarchlinux
+# password=csjarchlinux
 
 read -p "do you want to wipe full drive yes or no, or press enter to use defaults:"$'\n' part
 if [[ -z $part ]]; then
     part=yes
-fi
-
-read -p "Enter keymap, or press enter to use defaults:"$'\n' keymap
-if [[ -z $keymap ]]; then
-    keymap=us
 fi
 
 read -p "Enter user name, or press enter to use defaults:"$'\n' username
@@ -33,77 +27,82 @@ if [[ -z $hostname ]]; then
     hostname=csjarchlinux
 fi
 
-read -s -p "Enter user password, or press enter to use defaults:"$'\n' user_password
-if [[ -z $user_password ]]; then
-    user_password=csjarchlinux
+read -s -p "Enter user password, or press enter to use defaults:"$'\n' password
+if [[ -z $password ]]; then
+    password=csjarchlinux
 fi
-
-read -s -p "Enter root password, or press enter to use defaults:"$'\n' root_password
-if [[ -z $root_password ]]; then
-    root_password=csjarchlinux
-fi
-
 
 timedatectl set-ntp true  # Synchronize motherboard clock
 
+keymap=us
+
 if [[ $part == "no" ]]; then
-    pacman -Sy dialog --noconfirm                                                                  #install dialog for selecting disk
-    devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)                 #gets disk info for selection
-    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1       #chose which drive to format
-    clear           # clears blue screen from
-    lsblk           # shows avalable drives
-    echo ${drive}   # confirms drive selection
-    part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"     #finds boot partion
-    part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"     #finds root partion
-    cryptsetup luksOpen ${part_root} cryptroot  # Open the mapper
+    pacman -Sy dialog --noconfirm  # Install dialog for selecting disk
+    devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
+    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1  # Chose which drive to format
+    clear  # Clears blue screen from
+    lsblk  # Shows avalable drives
+    echo ${drive}  # Confirms drive selection
+    part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"  # Finds boot partion
+    part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"  # Finds root partion
+    mkfs.vfat -F32 ${part_boot}  # Format the EFI partition
+    echo -n "$password" | cryptsetup open ${part_root} cryptroot -d -  # Open the mapper
     mount /dev/mapper/cryptroot /mnt
-    # clearing non home data
-    btrfs subvolume delete /mnt/@
+
+    # Clearing non home data
+
     btrfs subvolume delete /mnt/@pkg
+    btrfs subvolume delete /mnt/@var/lib/portables
+    btrfs subvolume delete /mnt/@var/lib/machines
     btrfs subvolume delete /mnt/@var
     btrfs subvolume delete /mnt/@srv
     btrfs subvolume delete /mnt/@tmp
-    #creating new subvolumes
+    btrfs subvolume delete /mnt/@/.snapshots
+    btrfs subvolume delete /mnt/@home/.snapshots
+    btrfs subvolume delete /mnt/@
+
+    # Creating new subvolumes
     btrfs subvolume create /mnt/@
     btrfs subvolume create /mnt/@pkg
     btrfs subvolume create /mnt/@var
     btrfs subvolume create /mnt/@srv
     btrfs subvolume create /mnt/@tmp
+
+
     umount /mnt
+
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
-    mkdir -p /mnt2/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
+    mkdir -p /mnt/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var /dev/mapper/cryptroot /mnt/var
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
     chattr +C /mnt/var  # Copy on write disabled
-    mount ${part_boot} /mnt/boot  # Mount the boot partition
-    
-    else
-    
-    pacman -Sy dialog --noconfirm                                                                  #install dialog for selecting disk
-    devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)                 #gets disk info for selection
-    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1       #chose which drive to format
-    clear           # clears blue screen from 
-    lsblk           # shows avalable drives
-    echo ${drive}   # confirms drive selection
+	mount ${part_boot} /mnt/boot  # Mount the boot partition
+else
+	pacman -Sy dialog --noconfirm  # Install dialog for selecting disk
+    devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
+    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1  # Chose which drive to format
+    clear  # Clears blue screen from
+    lsblk  # Shows available drives
+    echo ${drive}  # Confirms drive selection
     sgdisk --zap-all ${drive}  # Delete tables
     printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk ${drive}  # Format the drive
-    
-    part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"     #finds boot partion
-    part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"     #finds root partion
-    
-    echo ${part_boot} # confirms boot partion selection
-    echo ${part_root} # confirms root partion selection
-    
+
+    part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"  # Finds boot partion
+    part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"  # Finds root partion
+
+    echo ${part_boot}  # Confirms boot partion selection
+    echo ${part_root}  # Confirms root partion selection
+
     mkdir -p -m0700 /run/cryptsetup  # Change permission to root only
-    cryptsetup luksFormat --type luks2 ${part_root}
-    cryptsetup luksOpen ${part_root} cryptroot  # Open the mapper
-    
+    echo -n "$password" | cryptsetup luksFormat --type luks2 ${part_root} -d -
+    echo -n "$password" | cryptsetup open ${part_root} cryptroot -d -
+
     mkfs.vfat -F32 ${part_boot}  # Format the EFI partition
     mkfs.btrfs /dev/mapper/cryptroot  # Format the encrypted partition
-    
+
     mount /dev/mapper/cryptroot /mnt
     btrfs subvolume create /mnt/@
     btrfs subvolume create /mnt/@home
@@ -112,7 +111,7 @@ if [[ $part == "no" ]]; then
     btrfs subvolume create /mnt/@srv
     btrfs subvolume create /mnt/@tmp
     umount /mnt
-    
+
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
     mkdir -p /mnt/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
@@ -122,22 +121,20 @@ if [[ $part == "no" ]]; then
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
     chattr +C /mnt/var  # Copy on write disabled
     mount ${part_boot} /mnt/boot  # Mount the boot partition
-    
 fi
+
+timedatectl set-ntp true  # Synchronize motherboard clock
 
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf # multilib
 
-read -p "Do you want to update and sync the mirrors before proceeding?" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6
-    pacman -Syy
-fi
+reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6
+pacman -Syy
 
-pacstrap -i /mnt base base-devel linux linux-firmware git nano fish \
+
+pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware git nano fish \
     intel-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator zsh \
     pipewire-pulse bluez bluez-utils \
     gnu-free-fonts ttf-droid \
@@ -173,8 +170,8 @@ sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 
 echo -e "$hostname" > /etc/hostname
 useradd -m -g users -G wheel -s /bin/fish $username
-echo -en "$root_password\n$root_password" | passwd
-echo -en "$user_password\n$user_password" | passwd $username
+echo -en "$password\n$password" | passwd
+echo -en "$password\n$password" | passwd $username
 
 useradd -g users -G wheel -m temp
 sudo -u temp mkdir -p /tmp/yay && cd /tmp/yay && sudo -u temp git clone https://aur.archlinux.org/yay.git && cd yay && sudo -u temp makepkg -si --noconfirm
@@ -204,6 +201,7 @@ sed -i 's/TIMELINE_LIMIT_WEEKLY="0"/TIMELINE_LIMIT_WEEKLY="4"'/g /etc/snapper/co
 sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="1"'/g /etc/snapper/configs/home
 sed -i 's/TIMELINE_LIMIT_YEARLY="10"/TIMELINE_LIMIT_YEARLY="0"'/g /etc/snapper/configs/home
 
+chown -R :wheel /home/.snapshots/
 
 journalctl --vacuum-size=100M --vacuum-time=2weeks
 
