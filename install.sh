@@ -283,7 +283,7 @@ EOF
 read -p "Do you wish to reboot? type y for yes"$'\n' -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-echo "thank you for using csjarchlinux installer script"
+echo "rebooting now"
 reboot
-else echo "thank you for using csjarchlinux installer script"
+else echo "script has finished"
 fi
