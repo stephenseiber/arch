@@ -142,7 +142,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware git nano fish 
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
     libreoffice-fresh qbittorrent \
     vivaldi vivaldi-ffmpeg-codecs \
-    jre8-openjdk jre11-openjdk jre-openjdk \
+    jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc discord neofetch apparmor gparted snapper \
     exfat-utils
 
@@ -202,6 +202,12 @@ sed -i 's/TIMELINE_LIMIT_YEARLY="10"/TIMELINE_LIMIT_YEARLY="0"'/g /etc/snapper/c
 chown -R :wheel /home/.snapshots/
 
 journalctl --vacuum-size=100M --vacuum-time=2weeks
+
+touch /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+tee -a default-wifi-powersave-on.conf << END
+[connection]
+wifi.powersave = 2
+END
 
 touch /etc/systemd/zram-generator.conf
 tee -a /etc/systemd/zram-generator.conf << END
