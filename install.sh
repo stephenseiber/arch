@@ -46,8 +46,7 @@ if [[ $part == "no" ]]; then
     part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"  # Finds boot partion
     part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"  # Finds root partion
     mkfs.vfat -F32 ${part_boot}  # Format the EFI partition
-    echo -n "$password" | cryptsetup open ${part_root} cryptroot -d -  # Open the mapper
-    mount /dev/mapper/cryptroot /mnt
+    mount ${part_root} /mnt
 
     # Clearing non home data
 
@@ -88,7 +87,7 @@ else
     lsblk  # Shows available drives
     echo ${drive}  # Confirms drive selection
     sgdisk --zap-all ${drive}  # Delete tables
-    printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk ${drive}  # Format the drive
+    printf "n\n1\n\n+512M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk ${drive}  # Format the drive
 
     part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"  # Finds boot partion
     part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"  # Finds root partion
@@ -96,14 +95,12 @@ else
     echo ${part_boot}  # Confirms boot partion selection
     echo ${part_root}  # Confirms root partion selection
 
-    mkdir -p -m0700 /run/cryptsetup  # Change permission to root only
-    echo -n "$password" | cryptsetup luksFormat --type luks2 ${part_root} -d -
-    echo -n "$password" | cryptsetup open ${part_root} cryptroot -d -
+   
 
     mkfs.vfat -F32 ${part_boot}  # Format the EFI partition
-    mkfs.btrfs /dev/mapper/cryptroot  # Format the encrypted partition
+    mkfs.btrfs ${part_root}  # Format the encrypted partition
 
-    mount /dev/mapper/cryptroot /mnt
+    mount ${part_root} /mnt
     btrfs subvolume create /mnt/@
     btrfs subvolume create /mnt/@home
     btrfs subvolume create /mnt/@pkg
@@ -112,13 +109,13 @@ else
     btrfs subvolume create /mnt/@tmp
     umount /mnt
 
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ ${part_root} /mnt
     mkdir -p /mnt/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var /dev/mapper/cryptroot /mnt/var
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home ${part_root} /mnt/home
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg ${part_root} /mnt/var/cache/pacman/pkg
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var ${part_root} /mnt/var
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv ${part_root} /mnt/srv
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp ${part_root} /mnt/tmp
     chattr +C /mnt/var  # Copy on write disabled
     mount ${part_boot} /mnt/boot  # Mount the boot partition
 fi
