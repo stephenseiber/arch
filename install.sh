@@ -48,6 +48,8 @@ if [[ $part == "no" ]]; then
     mkfs.vfat -F32 ${part_boot}  # Format the EFI partition
     mount ${part_root} /mnt
 
+    btrfs filesystem label ${part_root} arch
+
     # Clearing non home data
 
     btrfs subvolume delete /mnt/@pkg
@@ -100,6 +102,8 @@ else
     mkfs.vfat -F32 ${part_boot}  # Format the EFI partition
     mkfs.btrfs ${part_root}  # Format the encrypted partition
 
+    btrfs filesystem label ${part_root} arch
+
     mount ${part_root} /mnt
     btrfs subvolume create /mnt/@
     btrfs subvolume create /mnt/@home
@@ -140,7 +144,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware git nano fish 
     libreoffice-fresh qbittorrent \
     vivaldi vivaldi-ffmpeg-codecs \
     jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
-    system-config-printer cups vlc discord neofetch apparmor gparted snapper \
+    system-config-printer cups vlc discord neofetch gparted snapper \
     exfat-utils
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
@@ -270,7 +274,8 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nvidia-drm.modeset=1 nmi_watchdog=0 quiet rw
+options root="LABEL=arch" rw nvidia-drm.modeset=1
+
 END
 
 chsh -s /bin/fish
