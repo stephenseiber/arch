@@ -278,6 +278,28 @@ options root="LABEL=arch" rw nvidia-drm.modeset=1
 
 END
 
+mkdir -p /boot/loader/entries/
+touch /boot/loader/entries/arch.conf
+tee -a /boot/loader/entries/arch.conf << END
+title Arch Linux
+linux /vmlinuz-linux
+initrd /intel-ucode.img
+initrd /initramfs-linux.img
+options root="LABEL=arch" rw nvidia-drm.modeset=1
+
+END
+
+mkdir -p /boot/loader/entries/
+touch /boot/loader/entries/arch.conf
+tee -a /boot/loader/entries/arch.conf << END
+title Arch Linux
+linux /vmlinuz-linux
+initrd /intel-ucode.img
+initrd /initramfs-linux.img
+options root="LABEL=arch" rw nvidia-drm.modeset=1
+
+END
+
 chsh -s /bin/fish
 pacman-key --init
 pacman-key --populate archlinux
