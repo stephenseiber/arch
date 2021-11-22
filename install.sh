@@ -138,11 +138,11 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers 
     pipewire-pulse bluez bluez-utils \
     gnu-free-fonts ttf-droid \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
-    nvidia-dkms lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia nvidia-settings lib32-vkd3d vkd3d nvidia-prime opencl-nvidia \
+    nvidia lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia nvidia-settings lib32-vkd3d vkd3d nvidia-prime opencl-nvidia \
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks \
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
     libreoffice-fresh qbittorrent \
-    vivaldi vivaldi-ffmpeg-codecs dkms linux-zen linux-zen-headers\
+    vivaldi vivaldi-ffmpeg-codecs \
     jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc discord neofetch gparted snapper \
     exfat-utils
@@ -192,7 +192,6 @@ sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="7"'/g /etc/snapper/con
 sed -i 's/TIMELINE_LIMIT_WEEKLY="0"/TIMELINE_LIMIT_WEEKLY="4"'/g /etc/snapper/configs/root
 sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="1"'/g /etc/snapper/configs/root
 sed -i 's/TIMELINE_LIMIT_YEARLY="10"/TIMELINE_LIMIT_YEARLY="0"'/g /etc/snapper/configs/root
-
 sed -i 's/ALLOW_GROUPS=""/ALLOW_GROUPS="wheel"'/g /etc/snapper/configs/home
 sed -i 's/TIMELINE_LIMIT_HOURLY="10"/TIMELINE_LIMIT_HOURLY="16"'/g /etc/snapper/configs/home
 sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="7"'/g /etc/snapper/configs/home
@@ -234,9 +233,6 @@ When = PostTransaction
 Exec = /usr/bin/bootctl update
 END
 
-
-
-
 touch /etc/pacman.d/hooks/nvidia.hook
 tee -a /etc/pacman.d/hooks/nvidia.hook << END
   
@@ -276,16 +272,6 @@ initrd /intel-ucode.img
 initrd /initramfs-linux.img
 options root="LABEL=arch" rootflags=subvol=@ rw nvidia-drm.modeset=1
 
-END
-
-mkdir -p /boot/loader/entries/
-touch /boot/loader/entries/arch-zen.conf
-tee -a /boot/loader/entries/arch-zen.conf << END
-title Arch Linux Zen
-linux /vmlinuz-linux-zen
-initrd /intel-ucode.img
-initrd /initramfs-linux-zen.img
-options root="LABEL=arch" rootflags=subvol=@ rw nvidia-drm.modeset=1
 END
 
 
