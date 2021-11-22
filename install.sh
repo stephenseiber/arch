@@ -72,13 +72,13 @@ if [[ $part == "no" ]]; then
 
     umount /mnt
 
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ ${part_root} /mnt
     mkdir -p /mnt/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var /dev/mapper/cryptroot /mnt/var
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home ${part_root} /mnt/home
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg ${part_root} /mnt/var/cache/pacman/pkg
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var ${part_root} /mnt/var
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv ${part_root} /mnt/srv
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp ${part_root} /mnt/tmp
     chattr +C /mnt/var  # Copy on write disabled
 	mount ${part_boot} /mnt/boot  # Mount the boot partition
 else
