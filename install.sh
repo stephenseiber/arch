@@ -100,7 +100,7 @@ else
    
 
     mkfs.vfat -F32 ${part_boot}  # Format the EFI partition
-    mkfs.btrfs ${part_root}  # Format the encrypted partition
+    mkfs.btrfs -f ${part_root}  # Format the encrypted partition
 
     btrfs filesystem label ${part_root} arch
 
@@ -133,16 +133,16 @@ reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.
 pacman -Syy
 
 
-pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware git nano fish \
+pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers git nano fish \
     intel-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator \
     pipewire-pulse bluez bluez-utils \
     gnu-free-fonts ttf-droid \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
-    nvidia lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia nvidia-settings lib32-vkd3d vkd3d nvidia-prime opencl-nvidia \
+    nvidia-dkms lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia nvidia-settings lib32-vkd3d vkd3d nvidia-prime opencl-nvidia \
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks \
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
     libreoffice-fresh qbittorrent \
-    vivaldi vivaldi-ffmpeg-codecs dkms nvidia-dkms linux-zen\
+    vivaldi vivaldi-ffmpeg-codecs dkms linux-zen linux-zen-headers\
     jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc discord neofetch gparted snapper \
     exfat-utils
@@ -205,7 +205,7 @@ chown -R :wheel /home/.snapshots/
 journalctl --vacuum-size=100M --vacuum-time=2weeks
 
 touch /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
-tee -a default-wifi-powersave-on.conf << END
+tee -a /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf << END
 [connection]
 wifi.powersave = 2
 END
@@ -274,18 +274,18 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options root="LABEL=arch" rw nvidia-drm.modeset=1
+options root="LABEL=arch" rootflags=subvol=@ rw nvidia-drm.modeset=1
 
 END
 
 mkdir -p /boot/loader/entries/
 touch /boot/loader/entries/arch-zen.conf
-tee -a /boot/loader/entries/arch.-zenconf << END
+tee -a /boot/loader/entries/arch-zen.conf << END
 title Arch Linux Zen
 linux /vmlinuz-linux-zen
 initrd /intel-ucode.img
 initrd /initramfs-linux-zen.img
-options root="LABEL=arch" rw nvidia-drm.modeset=1
+options root="LABEL=arch" rootflags=subvol=@ rw nvidia-drm.modeset=1
 END
 
 
