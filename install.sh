@@ -142,7 +142,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware git nano fish 
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks \
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
     libreoffice-fresh qbittorrent \
-    vivaldi vivaldi-ffmpeg-codecs \
+    vivaldi vivaldi-ffmpeg-codecs dkms nvidia-dkms linux-zen\
     jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc discord neofetch gparted snapper \
     exfat-utils
@@ -279,26 +279,15 @@ options root="LABEL=arch" rw nvidia-drm.modeset=1
 END
 
 mkdir -p /boot/loader/entries/
-touch /boot/loader/entries/arch.conf
-tee -a /boot/loader/entries/arch.conf << END
-title Arch Linux
-linux /vmlinuz-linux
+touch /boot/loader/entries/arch-zen.conf
+tee -a /boot/loader/entries/arch.-zenconf << END
+title Arch Linux Zen
+linux /vmlinuz-linux-zen
 initrd /intel-ucode.img
-initrd /initramfs-linux.img
+initrd /initramfs-linux-zen.img
 options root="LABEL=arch" rw nvidia-drm.modeset=1
-
 END
 
-mkdir -p /boot/loader/entries/
-touch /boot/loader/entries/arch.conf
-tee -a /boot/loader/entries/arch.conf << END
-title Arch Linux
-linux /vmlinuz-linux
-initrd /intel-ucode.img
-initrd /initramfs-linux.img
-options root="LABEL=arch" rw nvidia-drm.modeset=1
-
-END
 
 chsh -s /bin/fish
 pacman-key --init
