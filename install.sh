@@ -134,7 +134,7 @@ pacman -Syy
 
 
 pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware git nano fish \
-    intel-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator zsh \
+    intel-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator \
     pipewire-pulse bluez bluez-utils \
     gnu-free-fonts ttf-droid \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
@@ -181,7 +181,7 @@ cd /tmp && touch panel-restart && echo '#!/bin/bash' > panel-restart && echo 'ki
 touch reflector-update && echo '#!/bin/bash' > reflector-update && echo 'sudo reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6' >> reflector-update && chmod +x reflector-update && mv reflector-update /usr/bin
 userdel -r temp
 
-systemctl enable NetworkManager fstrim.timer sddm bluetooth cups apparmor snapper-timeline.timer snapper-cleanup.timer 
+systemctl enable NetworkManager fstrim.timer sddm bluetooth cups snapper-timeline.timer snapper-cleanup.timer 
 
 snapper -c root --no-dbus create-config /
 snapper -c home --no-dbus create-config /home
@@ -254,8 +254,8 @@ When=PostTransaction
 Exec=/usr/bin/mkinitcpio -p linux
 END
 
-
-sed -i "s/^HOOKS.*/HOOKS=(base systemd keyboard autodetect sd-vconsole modconf block sd-encrypt btrfs filesystems fsck)/g" /etc/mkinitcpio.conf
+base udev autodetect modconf block filesystems keyboard fsck
+sed -i "s/^HOOKS.*/HOOKS=(base udev autodetect modconf block btrfs filesystems keyboard fsck)/g" /etc/mkinitcpio.conf
 sed -i 's/^MODULES.*/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 bootctl --path=/boot/ install
