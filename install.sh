@@ -141,7 +141,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware git nano fish 
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks \
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
     libreoffice-fresh qbittorrent \
-    vivaldi vivaldi-ffmpeg-codecs \
+    vivaldi vivaldi-ffmpeg-codecs r8168 \
     jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc discord neofetch apparmor gparted snapper \
     exfat-utils
