@@ -133,7 +133,7 @@ pacman -Syy
 
 
 pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware git nano fish \
-    intel-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator zsh \
+    intel-ucode networkmanager efibootmgr btrfs-progs zram-generator \
     pipewire-pulse bluez bluez-utils \
     gnu-free-fonts ttf-droid \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
@@ -143,7 +143,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware git nano fish 
     libreoffice-fresh qbittorrent \
     vivaldi vivaldi-ffmpeg-codecs r8168 \
     jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
-    system-config-printer cups vlc discord neofetch apparmor gparted snapper \
+    system-config-printer cups vlc discord neofetch gparted snapper \
     exfat-utils
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
@@ -176,27 +176,30 @@ sudo -u temp mkdir -p /tmp/yay && cd /tmp/yay && sudo -u temp git clone https://
 sudo -u temp yay -S epson-inkjet-printer-escpr --noconfirm
 sudo -u temp yay -S ttf-ms-fonts --noconfirm
 sudo -u temp yay -S snapper-gui-git --noconfirm
+sudo -u temp yay -S archlinux-appstream-data-pamac --noconfirm
+sudo -u temp yay -S pamac-tray-icon-plasma --noconfirm
+sudo -u temp yay -S pamac-all --noconfirm
 cd /tmp && touch panel-restart && echo '#!/bin/bash' > panel-restart && echo 'killall plasmashell;plasmashell &' >> panel-restart && chmod +x panel-restart && mv panel-restart /usr/bin/
 touch reflector-update && echo '#!/bin/bash' > reflector-update && echo 'sudo reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6' >> reflector-update && chmod +x reflector-update && mv reflector-update /usr/bin
 userdel -r temp
 
-systemctl enable NetworkManager fstrim.timer sddm bluetooth cups apparmor snapper-timeline.timer snapper-cleanup.timer 
+systemctl enable NetworkManager fstrim.timer sddm bluetooth cups snapper-timeline.timer snapper-cleanup.timer 
 
 snapper -c root --no-dbus create-config /
 snapper -c home --no-dbus create-config /home
 
 sed -i 's/ALLOW_GROUPS=""/ALLOW_GROUPS="wheel"'/g /etc/snapper/configs/root
-sed -i 's/TIMELINE_LIMIT_HOURLY="10"/TIMELINE_LIMIT_HOURLY="16"'/g /etc/snapper/configs/root
-sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="7"'/g /etc/snapper/configs/root
+sed -i 's/TIMELINE_LIMIT_HOURLY="10"/TIMELINE_LIMIT_HOURLY="24"'/g /etc/snapper/configs/root
+sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="14"'/g /etc/snapper/configs/root
 sed -i 's/TIMELINE_LIMIT_WEEKLY="0"/TIMELINE_LIMIT_WEEKLY="4"'/g /etc/snapper/configs/root
-sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="1"'/g /etc/snapper/configs/root
+sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="2"'/g /etc/snapper/configs/root
 sed -i 's/TIMELINE_LIMIT_YEARLY="10"/TIMELINE_LIMIT_YEARLY="0"'/g /etc/snapper/configs/root
 
 sed -i 's/ALLOW_GROUPS=""/ALLOW_GROUPS="wheel"'/g /etc/snapper/configs/home
-sed -i 's/TIMELINE_LIMIT_HOURLY="10"/TIMELINE_LIMIT_HOURLY="16"'/g /etc/snapper/configs/home
-sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="7"'/g /etc/snapper/configs/home
+sed -i 's/TIMELINE_LIMIT_HOURLY="10"/TIMELINE_LIMIT_HOURLY="24"'/g /etc/snapper/configs/home
+sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="14"'/g /etc/snapper/configs/home
 sed -i 's/TIMELINE_LIMIT_WEEKLY="0"/TIMELINE_LIMIT_WEEKLY="4"'/g /etc/snapper/configs/home
-sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="1"'/g /etc/snapper/configs/home
+sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="2"'/g /etc/snapper/configs/home
 sed -i 's/TIMELINE_LIMIT_YEARLY="10"/TIMELINE_LIMIT_YEARLY="0"'/g /etc/snapper/configs/home
 
 chown -R :wheel /home/.snapshots/
