@@ -161,7 +161,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers 
     libreoffice-fresh qbittorrent gamemode lib32-gamemode \
     vivaldi vivaldi-ffmpeg-codecs r8168 \
     jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
-    system-config-printer cups vlc discord neofetch gparted snapper virtualbox-guest-utils \
+    system-config-printer cups vlc discord neofetch gparted snapper \
     exfat-utils
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
