@@ -75,6 +75,9 @@ if [[ $part == "no" ]]; then
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ ${part_root} /mnt
     mkdir -p /mnt/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home ${part_root} /mnt/home
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Games ${part_root} /mnt/home/$username/Games
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Videos ${part_root} /mnt/home/$username/Videos
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@steamapps ${part_root} /mnt/home/$username/Games/steamapps/
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg ${part_root} /mnt/var/cache/pacman/pkg
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var ${part_root} /mnt/var
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv ${part_root} /mnt/srv
@@ -123,12 +126,13 @@ else
     mkdir -p /mnt/home/$username/Games
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Games ${part_root} /mnt/home/$username/Games
     mkdir -p /mnt/home/$username/Videos
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Videos ${part_root} /mnt/home/$username/Videos
     mkdir -p /mnt/home/$username/.local/
     mkdir -p /mnt/home/$username/.local/share/
     mkdir -p /mnt/home/$username/.local/share/Steam/steamapps/
     mkdir -p /mnt/home/$username/Games/steamapps/
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@steamapps ${part_root} /mnt/home/$username/Games/steamapps/
-    mount --bind /home/stephen/Games/steamapps/ /home/stephen/.local/share/Steam/steamapps/
+    mount --bind /mnt/home/stephen/Games/steamapps/ /mnt/home/stephen/.local/share/Steam/steamapps/
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg ${part_root} /mnt/var/cache/pacman/pkg
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var ${part_root} /mnt/var
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv ${part_root} /mnt/srv
@@ -302,3 +306,4 @@ echo "rebooting now"
 reboot
 else echo "script has finished"
 fi
+ 
