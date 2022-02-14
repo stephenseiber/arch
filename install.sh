@@ -74,8 +74,8 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers 
     pipewire-pulse bluez bluez-utils \
     gnu-free-fonts ttf-droid \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
-    nvidia lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia nvidia-settings lib32-vkd3d vkd3d nvidia-prime opencl-nvidia \
-    steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks \
+    mesa lib32-mesa xf86-video-amdgpu amdvlk lib32-amdvlk libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau  radeontop \
+    steam-native-runtime ppsspp vulkan-tools wine-staging lutris winetricks \
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
     libreoffice-fresh qbittorrent gamemode lib32-gamemode \
     vivaldi vivaldi-ffmpeg-codecs r8168 \
@@ -205,7 +205,7 @@ Exec=/usr/bin/mkinitcpio -p linux
 END
 
 sed -i "s/^HOOKS.*/HOOKS=(base udev autodetect modconf block btrfs filesystems keyboard fsck)/g" /etc/mkinitcpio.conf
-sed -i 's/^MODULES.*/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
+sed -i 's/^MODULES.*/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 
 bootctl --path=/boot/ install
@@ -224,7 +224,7 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options root="LABEL=arch" rootflags=subvol=@ rw nvidia-drm.modeset=1
+options root="LABEL=arch" rootflags=subvol=@ rw
 END
 
 chsh -s /bin/fish
