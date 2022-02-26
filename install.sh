@@ -58,7 +58,6 @@ mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Alphinaud ${drive2
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Thancred ${drive2p} /mnt/home/$username/"G'raha"/Thancred
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@"Y'shtola" ${drive2p} /mnt/home/$username/"G'raha"/"Y'shtola"
 
-
 mkdir -p /mnt/home/$username/Games
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Games ${part_root} /mnt/home/$username/Games
 mkdir -p /mnt/home/$username/Videos
