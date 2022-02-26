@@ -45,10 +45,6 @@ btrfs subvolume create /mnt/@steamapps
 btrfs subvolume create /mnt/@Videos
 umount /mnt
 
-
-
-
-
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ ${part_root} /mnt
 mkdir -p /mnt/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home ${part_root} /mnt/home
@@ -61,7 +57,6 @@ mkdir -p /mnt/home/$username/"G'raha"/"Y'shtola"
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Alphinaud ${drive2p} /mnt/home/$username/"G'raha"/Alphinaud
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Thancred ${drive2p} /mnt/home/$username/"G'raha"/Thancred
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@"Y'shtola" ${drive2p} /mnt/home/$username/"G'raha"/"Y'shtola"
-
 
 mkdir -p /mnt/home/$username/Games
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Games ${part_root} /mnt/home/$username/Games
