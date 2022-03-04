@@ -86,7 +86,7 @@ pacman -Syy
 pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers git nano fish \
     intel-ucode networkmanager efibootmgr btrfs-progs zram-generator \
     pipewire-pulse bluez bluez-utils \
-    gnu-free-fonts ttf-droid \
+    gnu-free-fonts ttf-droid piper \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
     mesa lib32-mesa xf86-video-amdgpu amdvlk lib32-amdvlk libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau  radeontop \
     steam-native-runtime ppsspp vulkan-tools wine-staging lutris winetricks \
