@@ -91,8 +91,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers 
     nvidia lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia nvidia-settings lib32-vkd3d vkd3d nvidia-prime opencl-nvidia \
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks \
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
-    libreoffice-fresh qbittorrent gamemode lib32-gamemode \
-    vivaldi vivaldi-ffmpeg-codecs r8168 \
+    libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs r8168 \
     jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc discord neofetch gparted snapper \
     exfat-utils
