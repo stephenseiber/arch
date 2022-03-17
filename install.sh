@@ -91,8 +91,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers 
     mesa lib32-mesa xf86-video-amdgpu amdvlk lib32-amdvlk libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau  radeontop \
     steam-native-runtime ppsspp vulkan-tools wine-staging lutris winetricks \
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
-    libreoffice-fresh qbittorrent gamemode lib32-gamemode \
-    vivaldi vivaldi-ffmpeg-codecs r8168 \
+    libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs r8168 \
     jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc discord neofetch gparted snapper \
     exfat-utils
