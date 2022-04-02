@@ -102,14 +102,14 @@ arch-chroot /mnt /bin/bash << EOF
 timedatectl set-ntp true
 ln -sf /usr/share/zoneinfo/$(curl -s http://ip-api.com/line?fields=timezone) /etc/localtime &>/dev/null
 hwclock --systohc
-sed -i "s/#en_US/en_US/g" /etc/locale.gen
+sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g" /etc/locale.gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 locale-gen
 
 echo -e "127.0.0.1\tlocalhost" > /etc/hosts
 echo -e "::1\t\tlocalhost" >> /etc/hosts
 echo -e "KEYMAP=$keymap" > /etc/vconsole.conf
-sed -i "s/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g" /etc/sudoers
+sed -i -e "s/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g" /etc/sudoers
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf
 sed -i "s/#Color/Color/g" /etc/pacman.conf
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf
