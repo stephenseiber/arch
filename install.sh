@@ -102,14 +102,14 @@ arch-chroot /mnt /bin/bash << EOF
 timedatectl set-ntp true
 ln -sf /usr/share/zoneinfo/$(curl -s http://ip-api.com/line?fields=timezone) /etc/localtime &>/dev/null
 hwclock --systohc
-sed -i "s/#en_US/en_US/g" /etc/locale.gen
+sed -i "s/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/g" /etc/locale.gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 locale-gen
 
 echo -e "127.0.0.1\tlocalhost" > /etc/hosts
 echo -e "::1\t\tlocalhost" >> /etc/hosts
 echo -e "KEYMAP=$keymap" > /etc/vconsole.conf
-sed -i "s/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g" /etc/sudoers
+sed -i -e "s/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g" /etc/sudoers
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf
 sed -i "s/#Color/Color/g" /etc/pacman.conf
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf
@@ -202,21 +202,6 @@ When = PostTransaction
 Exec = /usr/bin/bootctl update
 END
 
-touch /etc/pacman.d/hooks/nvidia.hook
-tee -a /etc/pacman.d/hooks/nvidia.hook << END
-[Trigger]
-Operation=Install
-Operation=Upgrade
-Operation=Remove
-Type=Package
-Target=nvidia
-Target=linux
-[Action]
-Depends=mkinitcpio
-When=PostTransaction
-Exec=/usr/bin/mkinitcpio -p linux
-END
-
 sed -i "s/^HOOKS.*/HOOKS=(base udev autodetect modconf block btrfs filesystems keyboard fsck)/g" /etc/mkinitcpio.conf
 sed -i 's/^MODULES.*/MODULES=(amdgpu)/' /etc/mkinitcpio.conf
 mkinitcpio -P
@@ -248,4 +233,3 @@ sudo chown -R $username /home/$username/
 EOF
 
 echo "script has finished"
-
