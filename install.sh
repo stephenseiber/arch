@@ -18,10 +18,10 @@ devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  
 drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1  # Chose which drive to format
 clear  # Clears blue screen
 
-devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
-drive2=$(dialog --stdout --menu "Select second drive" 0 0 0 ${devicelist}) || exit 1  # Chose which 
-clear # Clears blue screen
-drive2p="$(ls ${drive2}* | grep -E "^${drive2}p?1$")"  # Finds partition
+#devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
+#drive2=$(dialog --stdout --menu "Select second drive" 0 0 0 ${devicelist}) || exit 1  # Chose which 
+#clear # Clears blue screen
+#drive2p="$(ls ${drive2}* | grep -E "^${drive2}p?1$")"  # Finds partition
 
 sgdisk --zap-all ${drive}  # Delete tables
 printf "n\n1\n\n+512M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk ${drive}  # Format the drive
@@ -50,13 +50,13 @@ mkdir -p /mnt/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home ${part_root} /mnt/home
 mkdir -p /mnt/home/$username
 
-mkdir -p /mnt/home/$username/"G'raha"
-mkdir -p /mnt/home/$username/"G'raha"/Alphinaud
-mkdir -p /mnt/home/$username/"G'raha"/Thancred
-mkdir -p /mnt/home/$username/"G'raha"/"Y'shtola"
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Alphinaud ${drive2p} /mnt/home/$username/"G'raha"/Alphinaud
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Thancred ${drive2p} /mnt/home/$username/"G'raha"/Thancred
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@"Y'shtola" ${drive2p} /mnt/home/$username/"G'raha"/"Y'shtola"
+#mkdir -p /mnt/home/$username/"G'raha"
+#mkdir -p /mnt/home/$username/"G'raha"/Alphinaud
+#mkdir -p /mnt/home/$username/"G'raha"/Thancred
+#mkdir -p /mnt/home/$username/"G'raha"/"Y'shtola"
+#mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Alphinaud ${drive2p} /mnt/home/$username/"G'raha"/Alphinaud
+#mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Thancred ${drive2p} /mnt/home/$username/"G'raha"/Thancred
+#mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@"Y'shtola" ${drive2p} /mnt/home/$username/"G'raha"/"Y'shtola"
 
 mkdir -p /mnt/home/$username/Games
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Games ${part_root} /mnt/home/$username/Games
@@ -91,7 +91,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers 
     mesa lib32-mesa xf86-video-amdgpu amdvlk lib32-amdvlk libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau  radeontop \
     steam-native-runtime ppsspp vulkan-tools wine-staging lutris winetricks \
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
-    libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs r8168 \
+    libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs \
     jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc discord neofetch gparted snapper \
     exfat-utils
