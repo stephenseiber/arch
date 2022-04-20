@@ -72,6 +72,13 @@ mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Games ${part_root}
 mkdir -p /mnt/home/$username/Videos
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Videos ${part_root} /mnt/home/$username/Videos
 mkdir -p /mnt/home/$username/.local/
+mkdir -p /mnt/home/$username/Documents
+mkdir -p /mnt/home/$username/Downloads
+mkdir -p /mnt/home/$username/Pictures
+
+mount --bind /mnt/home/$username/"G'raha"/"Y'shtola"/Documents/ /mnt/home/$username/Documents/
+mount --bind /mnt/home/$username/"G'raha"/"Y'shtola"/Downloads/ /mnt/home/$username/Downloads/
+mount --bind /mnt/home/$username/"G'raha"/"Y'shtola"/Pictures/ /mnt/home/$username/Pictures
 mkdir -p /mnt/home/$username/.local/share/
 mkdir -p /mnt/home/$username/.local/share/Steam/steamapps/
 mkdir -p /mnt/home/$username/"G'raha"/Rudeus/steamapps/
