@@ -24,7 +24,7 @@ clear # Clears blue screen
 drive2p="$(ls ${drive2}* | grep -E "^${drive2}p?1$")"  # Finds partition
 
 devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
-drive3=$(dialog --stdout --menu "Select second drive" 0 0 0 ${devicelist}) || exit 1  # Chose which 
+drive3=$(dialog --stdout --menu "Select third drive" 0 0 0 ${devicelist}) || exit 1  # Chose which 
 clear # Clears blue screen
 drive3p="$(ls ${drive2}* | grep -E "^${drive2}p?1$")"  # Finds partition
 
