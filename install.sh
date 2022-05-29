@@ -96,7 +96,7 @@ sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf # multilib
 reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6
 pacman -Syy
 
-pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers git nano fish \
+pacstrap -i /mnt --noconfirm base base-devel linux linux-lts linux-firmware linux-headers-lts linux-headers git nano fish \
     intel-ucode networkmanager efibootmgr btrfs-progs zram-generator \
     pipewire-pulse bluez bluez-utils \
     gnu-free-fonts ttf-droid piper noto-fonts-emoji \
@@ -107,7 +107,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers 
     libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs \
     jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc discord neofetch gparted snapper \
-    exfat-utils
+    exfat-utils r8168 r8168-lts
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
@@ -236,6 +236,15 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
+options root="LABEL=arch" rootflags=subvol=@ rw
+END
+
+touch /boot/loader/entries/arch-lts.conf
+tee -a /boot/loader/entries/arch-lts.conf << END
+title Arch Linux LTS
+linux /vmlinuz-linux-lts
+initrd /intel-ucode.img
+initrd /initramfs-linux-lts.img
 options root="LABEL=arch" rootflags=subvol=@ rw
 END
 
