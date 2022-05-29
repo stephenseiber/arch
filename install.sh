@@ -68,7 +68,7 @@ mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@"Y'shtola" ${drive
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Rimuru ${drive3p} /mnt/home/$username/"G'raha"/Rimuru
 
 mkdir -p /mnt/home/$username/"G'raha"/Rudeus/
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Games ${part_root} mkdir -p /mnt/home/$username/"G'raha"/Rudeus/
+mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Games ${part_root} /mnt/home/$username/"G'raha"/Rudeus/
 mkdir -p /mnt/home/$username/Videos
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Videos ${part_root} /mnt/home/$username/Videos
 mkdir -p /mnt/home/$username/.local/
