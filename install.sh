@@ -96,7 +96,7 @@ sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf # multilib
 reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6
 pacman -Syy
 
-pacstrap -i /mnt --noconfirm base base-devel linux linux-lts linux-firmware linux-headers-lts linux-headers git nano fish \
+pacstrap -i /mnt --noconfirm base base-devel linux linux-lts linux-firmware linux-lts-headers linux-headers git nano fish \
     intel-ucode networkmanager efibootmgr btrfs-progs zram-generator \
     pipewire-pulse bluez bluez-utils \
     gnu-free-fonts ttf-droid piper noto-fonts-emoji \
@@ -252,6 +252,7 @@ chsh -s /bin/fish
 pacman-key --init
 pacman-key --populate archlinux
 pip install requests vdf
+read -p "Did the install have no issues"$'\n' test
 sudo chown -R $username /home/$username/
 EOF
 
