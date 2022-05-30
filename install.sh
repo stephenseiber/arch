@@ -252,8 +252,7 @@ chsh -s /bin/fish
 pacman-key --init
 pacman-key --populate archlinux
 pip install requests vdf
-#read -p "Did the install have no issues"$'\n' test
-#sudo chown -R $username /home/$username/
+sudo chown -R $username /home/$username/
 EOF
 
 echo "script has finished"
