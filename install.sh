@@ -57,15 +57,15 @@ mkdir -p /mnt/home/$username
 
 mkdir -p /mnt/home/$username/"G'raha"
 mkdir -p /mnt/home/$username/"G'raha"/Rudeus
-mkdir -p /mnt/home/$username/"G'raha"/Alphinaud
-mkdir -p /mnt/home/$username/"G'raha"/Thancred
-mkdir -p /mnt/home/$username/"G'raha"/"Y'shtola"
-mkdir -p /mnt/home/$username/"G'raha"/Rimuru
+#mkdir -p /mnt/home/$username/"G'raha"/Alphinaud
+#mkdir -p /mnt/home/$username/"G'raha"/Thancred
+#mkdir -p /mnt/home/$username/"G'raha"/"Y'shtola"
+#mkdir -p /mnt/home/$username/"G'raha"/Rimuru
 
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Alphinaud ${drive2p} /mnt/home/$username/"G'raha"/Alphinaud
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Thancred ${drive2p} /mnt/home/$username/"G'raha"/Thancred
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@"Y'shtola" ${drive2p} /mnt/home/$username/"G'raha"/"Y'shtola"
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Rimuru ${drive3p} /mnt/home/$username/"G'raha"/Rimuru
+#mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Alphinaud ${drive2p} /mnt/home/$username/"G'raha"/Alphinaud
+#mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Thancred ${drive2p} /mnt/home/$username/"G'raha"/Thancred
+#mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@"Y'shtola" ${drive2p} /mnt/home/$username/"G'raha"/"Y'shtola"
+#mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Rimuru ${drive3p} /mnt/home/$username/"G'raha"/Rimuru
 
 mkdir -p /mnt/home/$username/"G'raha"/Rudeus/
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Games ${part_root} /mnt/home/$username/"G'raha"/Rudeus/
