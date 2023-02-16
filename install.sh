@@ -18,15 +18,15 @@ devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  
 drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1  # Chose which drive to format
 clear  # Clears blue screen
 
-#devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
-#drive2=$(dialog --stdout --menu "Select second drive" 0 0 0 ${devicelist}) || exit 1  # Chose which 
-#clear # Clears blue screen
-#drive2p="$(ls ${drive2}* | grep -E "^${drive2}p?1$")"  # Finds partition
+devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
+drive2=$(dialog --stdout --menu "Select second drive" 0 0 0 ${devicelist}) || exit 1  # Chose which 
+clear # Clears blue screen
+drive2p="$(ls ${drive2}* | grep -E "^${drive2}p?1$")"  # Finds partition
 
-#devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
-#drive3=$(dialog --stdout --menu "Select third drive" 0 0 0 ${devicelist}) || exit 1  # Chose which 
-#clear # Clears blue screen
-#drive3p="$(ls ${drive3}* | grep -E "^${drive3}p?1$")"  # Finds partition
+devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
+drive3=$(dialog --stdout --menu "Select third drive" 0 0 0 ${devicelist}) || exit 1  # Chose which 
+clear # Clears blue screen
+drive3p="$(ls ${drive3}* | grep -E "^${drive3}p?1$")"  # Finds partition
 
 sgdisk --zap-all ${drive}  # Delete tables
 printf "n\n1\n\n+512M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk ${drive}  # Format the drive
@@ -57,15 +57,15 @@ mkdir -p /mnt/home/$username
 
 mkdir -p /mnt/home/$username/"G'raha"
 mkdir -p /mnt/home/$username/"G'raha"/Rudeus
-#mkdir -p /mnt/home/$username/"G'raha"/Alphinaud
-#mkdir -p /mnt/home/$username/"G'raha"/Thancred
-#mkdir -p /mnt/home/$username/"G'raha"/"Y'shtola"
-#mkdir -p /mnt/home/$username/"G'raha"/Rimuru
+mkdir -p /mnt/home/$username/"G'raha"/Alphinaud
+mkdir -p /mnt/home/$username/"G'raha"/Thancred
+mkdir -p /mnt/home/$username/"G'raha"/"Y'shtola"
+mkdir -p /mnt/home/$username/"G'raha"/Rimuru
 
-#mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Alphinaud ${drive2p} /mnt/home/$username/"G'raha"/Alphinaud
-#mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Thancred ${drive2p} /mnt/home/$username/"G'raha"/Thancred
-#mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@"Y'shtola" ${drive2p} /mnt/home/$username/"G'raha"/"Y'shtola"
-#mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Rimuru ${drive3p} /mnt/home/$username/"G'raha"/Rimuru
+mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Alphinaud ${drive2p} /mnt/home/$username/"G'raha"/Alphinaud
+mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Thancred ${drive2p} /mnt/home/$username/"G'raha"/Thancred
+mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@"Y'shtola" ${drive2p} /mnt/home/$username/"G'raha"/"Y'shtola"
+mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Rimuru ${drive3p} /mnt/home/$username/"G'raha"/Rimuru
 
 mkdir -p /mnt/home/$username/"G'raha"/Rudeus/
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@Games ${part_root} /mnt/home/$username/"G'raha"/Rudeus/
@@ -107,7 +107,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-lts linux-firmware linu
     libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs r8168 \
     jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc discord neofetch gparted \
-    exfat-utils r8168-lts virtualbox-guest-utils
+    exfat-utils r8168-lts
 #    snapper exfat-utils r8168-lts
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
@@ -131,13 +131,11 @@ useradd -m -g users -G wheel -s /bin/fish $username
 echo -en "$password\n$password" | passwd
 echo -en "$password\n$password" | passwd $username
 useradd -g users -G wheel -m temp
-
 sudo -u temp mkdir -p /tmp/yay && cd /tmp/yay && sudo -u temp git clone https://aur.archlinux.org/yay.git && cd yay && sudo -u temp makepkg -si --noconfirm
 sudo -u temp yay -S epson-inkjet-printer-escpr --noconfirm
 sudo -u temp yay -S ttf-ms-fonts --noconfirm
 #sudo -u temp yay -S snapper-gui-git --noconfirm
 sudo -u temp yay -S protonup-qt --noconfirm
-
 mkdir -p /home/$username/.config
 touch /home/$username/.config/baloofilerc
 tee -a /home/$username/.config/baloofilerc << END
@@ -147,7 +145,6 @@ exclude filters=*~,*.part,*.o,*.la,*.lo,*.loT,*.moc,moc_*.cpp,qrc_*.cpp,ui_*.h,c
 exclude filters version=8
 exclude folders[$~]=$~home/G'raha/Rudeus/,$~home/G'raha/Alphinaud/,$~home/G'raha/Rimuru/
 END
-
 sed -i 's/~home/HOME'/g /home/$username/.config/baloofilerc
 sed -i 's/~]/e]'/g /home/$username/.config/baloofilerc
 mkdir -p /home/$username/.config/fish
@@ -158,11 +155,10 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 END
-
 cd /tmp && touch panel-restart && echo '#!/bin/bash' > panel-restart && echo 'killall plasmashell;plasmashell &' >> panel-restart && chmod +x panel-restart && mv panel-restart /usr/bin/
 touch reflector-update && echo '#!/bin/bash' > reflector-update && echo 'sudo reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6' >> reflector-update && chmod +x reflector-update && mv reflector-update /usr/bin
 userdel -r temp
-systemctl enable NetworkManager fstrim.timer sddm bluetooth cups vboxservice.service
+systemctl enable NetworkManager fstrim.timer sddm bluetooth cups
 #systemctl enable NetworkManager fstrim.timer sddm bluetooth cups snapper-timeline.timer snapper-cleanup.timer
  
 #snapper -c root --no-dbus create-config /
@@ -180,21 +176,18 @@ systemctl enable NetworkManager fstrim.timer sddm bluetooth cups vboxservice.ser
 #sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="1"'/g /etc/snapper/configs/home
 #sed -i 's/TIMELINE_LIMIT_YEARLY="10"/TIMELINE_LIMIT_YEARLY="0"'/g /etc/snapper/configs/home
 #chown -R :wheel /home/.snapshots/
-
 journalctl --vacuum-size=100M --vacuum-time=2weeks
 touch /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
 tee -a /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf << END
 [connection]
 wifi.powersave = 2
 END
-
 touch /etc/systemd/zram-generator.conf
 tee -a /etc/systemd/zram-generator.conf << END
 [zram0]
 zram-fraction = 1
 max-zram-size = 4096
 END
-
 touch /etc/sysctl.d/99-swappiness.conf
 echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf
 mkdir -p /etc/pacman.d/hooks/
@@ -209,7 +202,6 @@ Description = Updating systemd-boot
 When = PostTransaction
 Exec = /usr/bin/bootctl update
 END
-
 touch /etc/pacman.d/hooks/nvidia.hook
 tee -a /etc/pacman.d/hooks/nvidia.hook << END
 [Trigger]
@@ -224,7 +216,6 @@ Depends=mkinitcpio
 When=PostTransaction
 Exec=/usr/bin/mkinitcpio -p linux
 END
-
 sed -i "s/^HOOKS.*/HOOKS=(base udev autodetect modconf block btrfs filesystems keyboard fsck)/g" /etc/mkinitcpio.conf
 sed -i 's/^MODULES.*/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
 mkinitcpio -P
@@ -235,7 +226,6 @@ default arch.conf
 console-mode max
 editor no
 END
-
 mkdir -p /boot/loader/entries/
 touch /boot/loader/entries/arch.conf
 tee -a /boot/loader/entries/arch.conf << END
@@ -245,7 +235,6 @@ initrd /intel-ucode.img
 initrd /initramfs-linux.img
 options root="LABEL=arch" rootflags=subvol=@ rw nvidia-drm.modeset=1
 END
-
 touch /boot/loader/entries/arch.conf
 tee -a /boot/loader/entries/arch-lts.conf << END
 title Arch Linux
@@ -254,7 +243,6 @@ initrd /intel-ucode.img
 initrd /initramfs-linux-lts.img
 options root="LABEL=arch" rootflags=subvol=@ rw nvidia-drm.modeset=1 ibt=off
 END
-
 chsh -s /bin/fish
 pacman-key --init
 pacman-key --populate archlinux
