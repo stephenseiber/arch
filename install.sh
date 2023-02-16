@@ -107,7 +107,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-lts linux-firmware linu
     libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs r8168 \
     jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc discord neofetch gparted \
-    exfat-utils r8168-lts
+    exfat-utils r8168-lts virtualbox-guest-utils
 #    snapper exfat-utils r8168-lts
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
@@ -162,7 +162,7 @@ END
 cd /tmp && touch panel-restart && echo '#!/bin/bash' > panel-restart && echo 'killall plasmashell;plasmashell &' >> panel-restart && chmod +x panel-restart && mv panel-restart /usr/bin/
 touch reflector-update && echo '#!/bin/bash' > reflector-update && echo 'sudo reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6' >> reflector-update && chmod +x reflector-update && mv reflector-update /usr/bin
 userdel -r temp
-systemctl enable NetworkManager fstrim.timer sddm bluetooth cups
+systemctl enable NetworkManager fstrim.timer sddm bluetooth cups vboxservice.service
 #systemctl enable NetworkManager fstrim.timer sddm bluetooth cups snapper-timeline.timer snapper-cleanup.timer
  
 #snapper -c root --no-dbus create-config /
