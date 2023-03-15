@@ -29,7 +29,7 @@ clear # Clears blue screen
 drive3p="$(ls ${drive3}* | grep -E "^${drive3}p?1$")"  # Finds partition
 
 sgdisk --zap-all ${drive}  # Delete tables
-printf "n\n1\n\n+512M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk ${drive}  # Format the drive
+printf "n\n1\n\n+1024M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk ${drive}  # Format the drive
 
 part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"  # Finds boot partion
 part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"  # Finds root partion
@@ -233,7 +233,7 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options root="LABEL=arch" rootflags=subvol=@ rw nvidia-drm.modeset=1
+options root="LABEL=arch" rootflags=subvol=@ rw nvidia-drm.modeset=1 ibt=off
 END
 touch /boot/loader/entries/arch.conf
 tee -a /boot/loader/entries/arch-lts.conf << END
