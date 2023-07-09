@@ -113,7 +113,7 @@ END
 sed -i "s/^HOOKS.*/HOOKS=(base udev autodetect modconf block btrfs filesystems keyboard fsck)/g" /etc/mkinitcpio.conf
 sed -i 's/^MODULES.*/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
 mkinitcpio -P
-bootctl install
+bootctl --path=/boot/ install
 mkdir -p /boot/loader/
 tee -a /boot/loader/loader.conf << END
 default arch.conf
