@@ -146,7 +146,7 @@ title Arch Linux
 linux /vmlinuz-linux-lts
 initrd /intel-ucode.img
 initrd /initramfs-linux-lts.img
-options root="LABEL=arch" rootflags=subvol=@ rw nvidia-drm.modeset=1 ibt=off
+options root="LABEL=arch" rootflags=subvol=@ rw nvidia-drm.modeset=1
 END
 chsh -s /bin/fish
 pacman-key --init
