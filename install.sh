@@ -138,7 +138,7 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options root="LABEL=arch" rootflags=subvol=@ rw nvidia-drm.modeset=1 ibt=off
+options root="LABEL=arch" rw nvidia-drm.modeset=1
 END
 touch /boot/loader/entries/arch.conf
 tee -a /boot/loader/entries/arch-lts.conf << END
