@@ -75,7 +75,18 @@ mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp ${part_root} /
 chattr +C /mnt/var  # Copy on write disabled"
 mount ${part_boot} /mnt/boot  # Mount the boot partition
 
-
+END
+touch /etc/systemd/zram-generator.conf
+tee -a /etc/systemd/zram-generator.conf << END
+[zram0]
+zram-fraction = 1
+max-zram-size = 4096
+END
+touch /etc/sysctl.d/99-swappiness.conf
+echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf
+mkdir -p /etc/pacman.d/hooks/
+touch /etc/pacman.d/hooks/100-systemd-boot.hook
+tee -a /etc/pacman.d/hooks/100-systemd-boot.hook << END
 
 #    snapper exfat-utils r8168-lts
 #sudo -u temp yay -S snapper-gui-git --noconfirm
