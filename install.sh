@@ -140,7 +140,7 @@ END
 chsh -s /bin/fish
 pacman-key --init
 pacman-key --populate archlinux
-pipx install requests vdf
+#pipx install requests vdf
 sudo chown -R $username /home/$username/
 EOF
 
