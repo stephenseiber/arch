@@ -28,7 +28,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-lts linux-firmware linu
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks \
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
     libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs r8168 \
-    jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
+    jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb libva-vdpau-driver\
     system-config-printer cups vlc discord neofetch gparted mkinitcpio python-pipx\
     exfat-utils r8168-lts
 
