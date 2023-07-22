@@ -24,11 +24,11 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-lts linux-firmware linu
     pipewire-pulse bluez bluez-utils \
     gnu-free-fonts ttf-droid piper noto-fonts-emoji \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
-    nvidia lib32-nvidia-utils nvidia-lts nvidia-utils lib32-opencl-nvidia nvidia-settings lib32-vkd3d vkd3d opencl-nvidia \
+    nvidia lib32-nvidia-utils nvidia-lts nvidia-utils lib32-opencl-nvidia nvidia-settings lib32-vkd3d vkd3d opencl-nvidia libva-vdpau-driver lib32-libvdpau \
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks \
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
     libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs r8168 \
-    jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb libva-vdpau-driver\
+    jre8-openjdk jre11-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc discord neofetch gparted mkinitcpio python-pipx\
     exfat-utils r8168-lts
 
