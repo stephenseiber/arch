@@ -24,7 +24,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-lts linux-firmware linu
     pipewire-pulse bluez bluez-utils \
     gnu-free-fonts ttf-droid piper noto-fonts-emoji \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
-    nvidia lib32-nvidia-utils nvidia-lts nvidia-utils lib32-opencl-nvidia nvidia-settings lib32-vkd3d vkd3d opencl-nvidia libva-vdpau-driver lib32-libvdpau \
+    nvidia lib32-nvidia-utils nvidia-lts nvidia-utils lib32-opencl-nvidia nvidia-settings lib32-vkd3d vkd3d opencl-nvidia libvdpau lib32-libvdpau cuda libxnvctrl egl-wayland nvtop \
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks \
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
     libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs r8168 \
