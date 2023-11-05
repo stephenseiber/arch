@@ -69,6 +69,7 @@ sudo -u temp yay -S brother-hl-l3210cw --noconfirm
 #sudo -u temp yay -S alvr-git --noconfirm
 sudo -u temp yay -S ttf-ms-fonts --noconfirm
 sudo -u temp yay -S protonup-qt --noconfirm
+archlinux-java set java-17-openjdk
 sudo -u temp yay -S atlauncher --noconfirm
 sudo -u temp yay -S polymc-bin --noconfirm
 mkdir -p /home/$username/.config
