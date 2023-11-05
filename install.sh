@@ -53,6 +53,7 @@ sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 sed -i "s/#MAKEFLAGS/MAKEFLAGS/g" /etc/makepkg.conf
 sed -i "s/-j2/-j12/g" /etc/makepkg.conf
+sed -i "s#bin/discord#bin/discord --enable-features=UseOzonePlatform --ozone-platform=wayland#g" /opt/discord/discord.desktop
 echo -e "$hostname" > /etc/hostname
 useradd -m -g users -G wheel -s /bin/fish $username
 echo -en "$password\n$password" | passwd
@@ -60,8 +61,8 @@ echo -en "$password\n$password" | passwd $username
 useradd -g users -G wheel -m temp
 sudo -u temp mkdir -p /tmp/yay && cd /tmp/yay && sudo -u temp git clone https://aur.archlinux.org/yay.git && cd yay && sudo -u temp makepkg -si --noconfirm
 rustup update
-sudo -u temp yay -S python2-bin --noconfirm
-sudo -u temp yay -S ogmrip-ac3 --noconfirm
+#sudo -u temp yay -S python2-bin --noconfirm
+#sudo -u temp yay -S ogmrip-ac3 --noconfirm
 sudo -u temp yay -S scream --noconfirm
 sudo -u temp yay -S cider --noconfirm
 sudo -u temp yay -S uxplay --noconfirm
