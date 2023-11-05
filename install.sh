@@ -66,7 +66,7 @@ sudo -u temp yay -S scream --noconfirm
 sudo -u temp yay -S cider --noconfirm
 sudo -u temp yay -S uxplay --noconfirm
 sudo -u temp yay -S brother-hl-l3210cw --noconfirm
-sudo -u temp yay -S alvr-git --noconfirm
+#sudo -u temp yay -S alvr-git --noconfirm
 sudo -u temp yay -S ttf-ms-fonts --noconfirm
 sudo -u temp yay -S protonup-qt --noconfirm
 sudo -u temp yay -S atlauncher --noconfirm
