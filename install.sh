@@ -31,7 +31,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-lts linux-firmware linu
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
     libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs r8168 mtools \
     jre8-openjdk jre11-openjdk jre17-openjdk jre-openjdk wireless-regdb \
-    system-config-printer cups vlc discord neofetch gparted mkinitcpio python-pipx\
+    system-config-printer cups vlc discord neofetch gparted mkinitcpio python-pipx pipewire-jack phonon-vlc \
     exfat-utils r8168-lts x265 helvum foliate libde265 libmatroska kvazaar qbittorrent rustup
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
