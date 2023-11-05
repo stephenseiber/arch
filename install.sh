@@ -15,6 +15,8 @@ sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf # multilib
+sed -i "s/#MAKEFLAGS/MAKEFLAGS/g" /etc/makepkg.conf
+sed -i "s/-j2/-j12/g" /etc/makepkg.conf
 
 reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6
 pacman -Syy
@@ -49,6 +51,8 @@ sed -i "/#Color/a ILoveCandy" /etc/pacman.conf
 sed -i "s/#Color/Color/g" /etc/pacman.conf
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
+sed -i "s/#MAKEFLAGS/MAKEFLAGS/g" /etc/makepkg.conf
+sed -i "s/-j2/-j12/g" /etc/makepkg.conf
 echo -e "$hostname" > /etc/hostname
 useradd -m -g users -G wheel -s /bin/fish $username
 echo -en "$password\n$password" | passwd
