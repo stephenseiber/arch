@@ -59,6 +59,7 @@ echo -en "$password\n$password" | passwd
 echo -en "$password\n$password" | passwd $username
 useradd -g users -G wheel -m temp
 sudo -u temp mkdir -p /tmp/yay && cd /tmp/yay && sudo -u temp git clone https://aur.archlinux.org/yay.git && cd yay && sudo -u temp makepkg -si --noconfirm
+sudo -u temp yay -S python2-bin --noconfirm
 sudo -u temp yay -S ogmrip-ac3 --noconfirm
 sudo -u temp yay -S scream --noconfirm
 sudo -u temp yay -S cider --noconfirm
