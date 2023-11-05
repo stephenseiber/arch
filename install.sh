@@ -32,7 +32,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-lts linux-firmware linu
     libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs r8168 mtools \
     jre8-openjdk jre11-openjdk jre17-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc discord neofetch gparted mkinitcpio python-pipx\
-    exfat-utils r8168-lts x265 helvum foliate libde265 libmatroska kvazaar qbittorrent
+    exfat-utils r8168-lts x265 helvum foliate libde265 libmatroska kvazaar qbittorrent rustup
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
@@ -59,17 +59,18 @@ echo -en "$password\n$password" | passwd
 echo -en "$password\n$password" | passwd $username
 useradd -g users -G wheel -m temp
 sudo -u temp mkdir -p /tmp/yay && cd /tmp/yay && sudo -u temp git clone https://aur.archlinux.org/yay.git && cd yay && sudo -u temp makepkg -si --noconfirm
+rustup update
 sudo -u temp yay -S python2-bin --noconfirm
 sudo -u temp yay -S ogmrip-ac3 --noconfirm
 sudo -u temp yay -S scream --noconfirm
 sudo -u temp yay -S cider --noconfirm
 sudo -u temp yay -S uxplay --noconfirm
 sudo -u temp yay -S brother-hl-l3210cw --noconfirm
-sudo -u temp yay -S alvr --noconfirm
+sudo -u temp yay -S alvr-git --noconfirm
 sudo -u temp yay -S ttf-ms-fonts --noconfirm
 sudo -u temp yay -S protonup-qt --noconfirm
 sudo -u temp yay -S atlauncher --noconfirm
-sudo -u temp yay -S polymc --noconfirm
+sudo -u temp yay -S polymc-bin --noconfirm
 mkdir -p /home/$username/.config
 touch /home/$username/.config/baloofilerc
 tee -a /home/$username/.config/baloofilerc << END
