@@ -3,7 +3,7 @@ mount -o remount,size=8G /run/archiso/cowspace
 clear   # Clear the TTY
 set -e  # The script will not run if we CTRL + C, or in case of an error
 set -u  # Treat unset variables as an error when substituting
-pacman -Sy archlinux-keyring --noconfirm
+
 read -p "Enter user name, or press enter to use defaults:"$'\n' username
 read -s -p "Enter user password, or press enter to use defaults:"$'\n' password
 read -p "Enter host name, or press enter to use defaults:"$'\n' hostname
@@ -20,6 +20,7 @@ sed -i "s/-j2/-j12/g" /etc/makepkg.conf
 
 reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6
 pacman -Syy
+pacman -Sy archlinux-keyring --noconfirm
 
 pacstrap -i /mnt --noconfirm base base-devel linux linux-lts linux-firmware linux-lts-headers linux-headers git nano fish \
     intel-ucode networkmanager efibootmgr btrfs-progs zram-generator \
