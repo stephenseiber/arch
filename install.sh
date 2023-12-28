@@ -68,15 +68,13 @@ sudo -u temp mkdir -p /tmp/yay && cd /tmp/yay && sudo -u temp git clone https://
 #sudo -u temp yay -S python2-bin --noconfirm
 #sudo -u temp yay -S ogmrip-ac3 --noconfirm
 #sudo -u temp yay -S alvr-git --noconfirm
-#archlinux-java set java-17-openjdk
-#sudo -u temp yay -S atlauncher --noconfirm
 sudo -u temp yay -S scream --noconfirm
 sudo -u temp yay -S cider --noconfirm
 sudo -u temp yay -S uxplay --noconfirm
 sudo -u temp yay -S brother-hl-l3210cw --noconfirm
 sudo -u temp yay -S ttf-ms-fonts --noconfirm
 sudo -u temp yay -S protonup-qt --noconfirm
-sudo -u temp yay -S polymc-bin --noconfirm
+sudo -u temp yay -S prismlauncher --noconfirm
 mkdir -p /home/$username/.config
 touch /home/$username/.config/baloofilerc
 tee -a /home/$username/.config/baloofilerc << END
