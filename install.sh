@@ -139,21 +139,21 @@ console-mode max
 editor no
 END
 mkdir -p /boot/loader/entries/
-touch /boot/loader/entries/arch2.conf
-tee -a /boot/loader/entries/arch2.conf << END
+touch /boot/loader/entries/arch.conf
+tee -a /boot/loader/entries/arch.conf << END
 title Arch Linux
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options root="LABEL=arch2" rw nvidia-drm.modeset=1
+options root="LABEL=arch" rw nvidia-drm.modeset=1
 END
-touch /boot/loader/entries/arch2-lts.conf
-tee -a /boot/loader/entries/arch2-lts.conf << END
+touch /boot/loader/entries/arch-lts.conf
+tee -a /boot/loader/entries/arch-lts.conf << END
 title Arch Linux
 linux /vmlinuz-linux-lts
 initrd /intel-ucode.img
 initrd /initramfs-linux-lts.img
-options root="LABEL=arch2" rw nvidia-drm.modeset=1
+options root="LABEL=arch" rw nvidia-drm.modeset=1
 END
 chsh -s /bin/fish
 pacman-key --init
