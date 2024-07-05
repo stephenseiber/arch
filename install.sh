@@ -31,12 +31,12 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-lts linux-firmware linu
     lib32-vkd3d vkd3d opencl-nvidia libvdpau lib32-libvdpau cuda libxnvctrl egl-wayland nvtop \
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks ffnvcodec-headers \
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
-    libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs r8168 mtools \
+    libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs mtools \
     jre8-openjdk jre11-openjdk jre17-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc discord neofetch gparted mkinitcpio python-pipx \
     exfat-utils r8168-lts x265 helvum foliate libde265 libmatroska kvazaar qbittorrent \
     pipewire-jack powerdevil phonon-qt5-vlc x264 x265 mpg123 aom flac libkate libogg libtheora \
-    libvpx opus speex libvorbis libva-vdpau-driver dav1d 
+    libvpx opus speex libvorbis libva-nvidia-driver dav1d 
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
