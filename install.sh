@@ -22,12 +22,12 @@ reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.
 pacman -Syy
 pacman -Sy archlinux-keyring --noconfirm
 
-pacstrap -i /mnt --noconfirm base base-devel linux linux-lts linux-firmware linux-lts-headers linux-headers git nano fish \
+pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers git nano fish \
     intel-ucode networkmanager efibootmgr btrfs-progs zram-generator \
     pipewire-pulse bluez bluez-utils \
     gnu-free-fonts ttf-droid piper noto-fonts-emoji \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
-    nvidia-open lib32-nvidia-utils nvidia-lts nvidia-utils lib32-opencl-nvidia nvidia-settings  \
+    nvidia-open lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia nvidia-settings  \
     lib32-vkd3d vkd3d opencl-nvidia libvdpau lib32-libvdpau cuda libxnvctrl egl-wayland nvtop \
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks ffnvcodec-headers \
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
@@ -145,15 +145,7 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options root="LABEL=arch" rw nvidia-drm.modeset=1
-END
-touch /boot/loader/entries/arch-lts.conf
-tee -a /boot/loader/entries/arch-lts.conf << END
-title Arch Linux
-linux /vmlinuz-linux-lts
-initrd /intel-ucode.img
-initrd /initramfs-linux-lts.img
-options root="LABEL=arch" rw nvidia-drm.modeset=1
+options root="LABEL=arch" rw nvidia-drm.modeset=1 nvidia_drm.fbdev=1
 END
 chsh -s /bin/fish
 pacman-key --init
