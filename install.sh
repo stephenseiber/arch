@@ -23,7 +23,7 @@ pacman -Syy
 pacman -Sy archlinux-keyring --noconfirm
 
 pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers git nano fish \
-    intel-ucode networkmanager efibootmgr btrfs-progs zram-generator \
+    intel-ucode networkmanager efibootmgr btrfs-progs \
     pipewire-pulse bluez bluez-utils \
     gnu-free-fonts ttf-droid piper noto-fonts-emoji \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
@@ -32,11 +32,11 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers 
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks ffnvcodec-headers \
     plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
     libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs mtools \
-    jre8-openjdk jre11-openjdk jre17-openjdk jre-openjdk wireless-regdb \
-    system-config-printer cups vlc discord neofetch gparted mkinitcpio python-pipx \
+    jre8-openjdk jre11-openjdk jre17-openjdk jre21-openjdk jre-openjdk wireless-regdb \
+    system-config-printer cups vlc vlc-plugins-all discord neofetch gparted mkinitcpio python-pipx \
     exfat-utils r8168-lts x265 helvum foliate libde265 libmatroska kvazaar qbittorrent \
     pipewire-jack powerdevil phonon-qt5-vlc x264 x265 mpg123 aom flac libkate libogg libtheora \
-    libvpx opus speex libvorbis libva-nvidia-driver dav1d 
+    libvpx opus speex libvorbis libva-nvidia-driver dav1d MkvToolNix-gui unrar openrgb
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
