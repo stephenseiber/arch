@@ -28,15 +28,15 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers 
     gnu-free-fonts ttf-droid piper noto-fonts-emoji \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
     nvidia-open nvidia-open-lts lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia nvidia-settings  \
-    lib32-vkd3d vkd3d opencl-nvidia libvdpau lib32-libvdpau cuda libxnvctrl egl-wayland nvtop \
+    lib32-vkd3d vkd3d opencl-nvidia libvdpau lib32-libvdpau cuda libxnvctrl egl-wayland nvtop linux-firmware-nvidia \
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks ffnvcodec-headers \
-    plasma-meta kde-applications-meta plasma-wayland-session packagekit-qt5 fwupd flatpak \
+    plasma-meta kde-applications-meta packagekit-qt5 fwupd flatpak \
     libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs mtools \
     jre8-openjdk jre11-openjdk jre17-openjdk jre21-openjdk jre-openjdk wireless-regdb \
-    system-config-printer cups vlc vlc-plugins-all discord neofetch gparted mkinitcpio python-pipx \
+    system-config-printer cups vlc vlc-plugins-all discord gparted mkinitcpio python-pipx \
     exfat-utils r8168-lts x265 helvum foliate libde265 libmatroska kvazaar qbittorrent \
     pipewire-jack powerdevil phonon-qt5-vlc x264 x265 mpg123 aom flac libkate libogg libtheora \
-    libvpx opus speex libvorbis libva-nvidia-driver dav1d MkvToolNix-gui unrar openrgb
+    libvpx opus speex libvorbis libva-nvidia-driver dav1d mkvtoolnix-gui unrar openrgb
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
@@ -67,7 +67,7 @@ sudo -u temp mkdir -p /tmp/yay && cd /tmp/yay && sudo -u temp git clone https://
 #rustup update
 #sudo -u temp yay -S python2-bin --noconfirm
 #sudo -u temp yay -S ogmrip-ac3 --noconfirm
-#sudo -u temp yay -S alvr-git --noconfirm
+#sudo -u temp yay -S alvr-nvidia --noconfirm
 sudo -u temp yay -S scream --noconfirm
 sudo -u temp yay -S cider --noconfirm
 sudo -u temp yay -S uxplay --noconfirm
@@ -75,6 +75,7 @@ sudo -u temp yay -S brother-hl-l3210cw --noconfirm
 sudo -u temp yay -S ttf-ms-fonts --noconfirm
 sudo -u temp yay -S protonup-qt --noconfirm
 sudo -u temp yay -S prismlauncher --noconfirm
+sudo -u temp yay -S neofetch --noconfirmc
 mkdir -p /home/$username/.config
 touch /home/$username/.config/baloofilerc
 tee -a /home/$username/.config/baloofilerc << END
