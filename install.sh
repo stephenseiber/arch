@@ -35,7 +35,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers 
     system-config-printer cups vlc vlc-plugins-all discord gparted mkinitcpio python-pipx \
     exfat-utils r8168-lts x265 helvum foliate libde265 libmatroska kvazaar qbittorrent \
     pipewire-jack powerdevil phonon-qt5-vlc x264 x265 mpg123 aom flac libkate libogg libtheora \
-    libvpx opus speex libvorbis libva-nvidia-driver dav1d mkvtoolnix-gui unrar openrgb python-requests
+    libvpx opus speex libvorbis libva-nvidia-driver dav1d mkvtoolnix-gui unrar openrgb python-requests dosfstools exfatprogs lm_sensors lib32-lm_sensors
 
 
 
