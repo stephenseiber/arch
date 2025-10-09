@@ -130,7 +130,7 @@ options root="LABEL=arch" rw
 END
 
 touch /boot/loader/entries/archLTS.conf
-tee -a /boot/loader/entries/arch.conf << END
+tee -a /boot/loader/entries/archLTS.conf << END
 title Arch Linux
 linux vmlinuz-linux-lts
 initrd /intel-ucode.img
