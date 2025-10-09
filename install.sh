@@ -151,7 +151,7 @@ options root="LABEL=arch" rw nvidia-drm.modeset=1 nvidia_drm.fbdev=1
 END
 
 touch /boot/loader/entries/archLTS.conf
-tee -a /boot/loader/entries/arch.conf << END
+tee -a /boot/loader/entries/archLTS.conf << END
 title Arch Linux
 linux vmlinuz-linux-lts
 initrd /intel-ucode.img
