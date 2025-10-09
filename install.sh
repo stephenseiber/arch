@@ -36,7 +36,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers 
     system-config-printer cups vlc vlc-plugins-all discord gparted mkinitcpio python-pipx \
     exfat-utils r8168-lts x265 helvum foliate libde265 libmatroska kvazaar qbittorrent \
     pipewire-jack powerdevil phonon-qt5-vlc x264 x265 mpg123 aom flac libkate libogg libtheora \
-    libvpx opus speex libvorbis libva-nvidia-driver dav1d mkvtoolnix-gui unrar openrgb
+    libvpx opus speex libvorbis libva-nvidia-driver dav1d mkvtoolnix-gui unrar openrgb python-requests dosfstools exfatprogs chromium lm_sensors lib32-lm_sensors
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
@@ -76,6 +76,7 @@ sudo -u temp yay -S ttf-ms-fonts --noconfirm
 sudo -u temp yay -S protonup-qt --noconfirm
 sudo -u temp yay -S prismlauncher --noconfirm
 sudo -u temp yay -S neofetch --noconfirmc
+sudo -u temp yay -S python-vdf --noconfirmc
 mkdir -p /home/$username/.config
 touch /home/$username/.config/baloofilerc
 tee -a /home/$username/.config/baloofilerc << END
