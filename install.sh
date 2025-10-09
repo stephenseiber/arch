@@ -16,14 +16,14 @@ sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf # multilib
 sed -i "s/#MAKEFLAGS/MAKEFLAGS/g" /etc/makepkg.conf
-sed -i "s/-j2/-j12/g" /etc/makepkg.conf
+sed -i "s/-j2/-j6/g" /etc/makepkg.conf
 
 reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6
 pacman -Syy
 pacman -Sy archlinux-keyring --noconfirm
 
 pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers git nano fish \
-    intel-ucode networkmanager efibootmgr btrfs-progs \
+    intel-ucode networkmanager efibootmgr \
     pipewire-pulse bluez bluez-utils \
     gnu-free-fonts ttf-droid piper noto-fonts-emoji \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
@@ -40,6 +40,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers 
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
+
 timedatectl set-ntp true
 ln -sf /usr/share/zoneinfo/$(curl -s http://ip-api.com/line?fields=timezone) /etc/localtime &>/dev/null
 hwclock --systohc
@@ -56,7 +57,7 @@ sed -i "s/#Color/Color/g" /etc/pacman.conf
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 sed -i "s/#MAKEFLAGS/MAKEFLAGS/g" /etc/makepkg.conf
-sed -i "s/-j2/-j12/g" /etc/makepkg.conf
+sed -i "s/-j2/-j6/g" /etc/makepkg.conf
 sed -i "s#bin/discord#bin/discord --enable-features=UseOzonePlatform --ozone-platform=wayland#g" /opt/discord/discord.desktop
 echo -e "$hostname" > /etc/hostname
 useradd -m -g users -G wheel -s /bin/fish $username
@@ -67,7 +68,6 @@ sudo -u temp mkdir -p /tmp/yay && cd /tmp/yay && sudo -u temp git clone https://
 #rustup update
 #sudo -u temp yay -S python2-bin --noconfirm
 #sudo -u temp yay -S ogmrip-ac3 --noconfirm
-#sudo -u temp yay -S alvr-nvidia --noconfirm
 sudo -u temp yay -S scream --noconfirm
 sudo -u temp yay -S cider --noconfirm
 sudo -u temp yay -S uxplay --noconfirm
@@ -129,7 +129,7 @@ Depends=mkinitcpio
 When=PostTransaction
 Exec=/usr/bin/mkinitcpio -p linux
 END
-sed -i "s/^HOOKS.*/HOOKS=(base udev autodetect modconf block btrfs filesystems keyboard fsck)/g" /etc/mkinitcpio.conf
+sed -i "s/^HOOKS.*/HOOKS=(base udev autodetect modconf block filesystems keyboard fsck)/g" /etc/mkinitcpio.conf
 sed -i 's/^MODULES.*/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 bootctl --path=/boot/ install
@@ -139,6 +139,7 @@ default arch.conf
 console-mode max
 editor no
 END
+
 mkdir -p /boot/loader/entries/
 touch /boot/loader/entries/arch.conf
 tee -a /boot/loader/entries/arch.conf << END
@@ -148,6 +149,16 @@ initrd /intel-ucode.img
 initrd /initramfs-linux.img
 options root="LABEL=arch" rw nvidia-drm.modeset=1 nvidia_drm.fbdev=1
 END
+
+touch /boot/loader/entries/archLTS.conf
+tee -a /boot/loader/entries/arch.conf << END
+title Arch Linux
+linux vmlinuz-linux-lts
+initrd /intel-ucode.img
+initrd initramfs-linux-lts.img
+options root="LABEL=arch" rw nvidia-drm.modeset=1 nvidia_drm.fbdev=1
+END
+
 chsh -s /bin/fish
 pacman-key --init
 pacman-key --populate archlinux
