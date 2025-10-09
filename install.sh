@@ -29,12 +29,12 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers 
     pavucontrol ntfs-3g openssh python-pip wget reflector \
     mesa lib32-mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau nvtop \
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks ffnvcodec-headers \
-    plasma-meta kde-applications-meta packagekit-qt5 fwupd flatpak \
+    plasma-meta kde-applications-meta packagekit-qt6 fwupd flatpak \
     libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs mtools \
     jre8-openjdk jre11-openjdk jre17-openjdk jre21-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc vlc-plugins-all discord gparted mkinitcpio python-pipx \
     exfat-utils r8168-lts x265 helvum foliate libde265 libmatroska kvazaar qbittorrent \
-    pipewire-jack powerdevil phonon-qt5-vlc x264 x265 mpg123 aom flac libkate libogg libtheora \
+    pipewire-jack powerdevil phonon-qt6-vlc x264 x265 mpg123 aom flac libkate libogg libtheora \
     libvpx opus speex libvorbis libva-nvidia-driver dav1d mkvtoolnix-gui unrar openrgb python-requests dosfstools exfatprogs lm_sensors lib32-lm_sensors
 
 
@@ -70,7 +70,6 @@ sudo -u temp mkdir -p /tmp/yay && cd /tmp/yay && sudo -u temp git clone https://
 #rustup update
 #sudo -u temp yay -S python2-bin --noconfirm
 #sudo -u temp yay -S ogmrip-ac3 --noconfirm
-sudo -u temp yay -S scream --noconfirm
 sudo -u temp yay -S cider --noconfirm
 sudo -u temp yay -S uxplay --noconfirm
 sudo -u temp yay -S brother-hl-l3210cw --noconfirm
@@ -86,7 +85,7 @@ tee -a /home/$username/.config/baloofilerc << END
 dbVersion=2
 exclude filters=*~,*.part,*.o,*.la,*.lo,*.loT,*.moc,moc_*.cpp,qrc_*.cpp,ui_*.h,cmake_install.cmake,CMakeCache.txt,CTestTestfile.cmake,libtool,config.status,confdefs.h,autom4te,conftest,confstat,Makefile.am,*.gcode,.ninja_deps,.ninja_log,build.ninja,*.csproj,*.m4,*.rej,*.gmo,*.pc,*.omf,*.aux,*.tmp,*.po,*.vm*,*.nvram,*.rcore,*.swp,*.swap,lzo,litmain.sh,*.orig,.histfile.*,.xsession-errors*,*.map,*.so,*.a,*.db,*.qrc,*.ini,*.init,*.img,*.vdi,*.vbox*,vbox.log,*.qcow2,*.vmdk,*.vhd,*.vhdx,*.sql,*.sql.gz,*.ytdl,*.class,*.pyc,*.pyo,*.elc,*.qmlc,*.jsc,*.fastq,*.fq,*.gb,*.fasta,*.fna,*.gbff,*.faa,po,CVS,.svn,.git,_darcs,.bzr,.hg,CMakeFiles,CMakeTmp,CMakeTmpQmake,.moc,.obj,.pch,.uic,.npm,.yarn,.yarn-cache,__pycache__,node_modules,node_packages,nbproject,core-dumps,lost+found
 exclude filters version=8
-exclude folders[$~]=$~home/g'raha/,$~home/alphinaud/
+exclude folders[e]=$HOME/Alphinaud/,$HOME/G'raha Tia/,$HOME/Rimuru/
 END
 sed -i 's/~home/HOME'/g /home/$username/.config/baloofilerc
 sed -i 's/~]/e]'/g /home/$username/.config/baloofilerc
