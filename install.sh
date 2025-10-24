@@ -22,15 +22,15 @@ reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.
 pacman -Syy
 pacman -Sy archlinux-keyring --noconfirm
 
-pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware linux-headers git nano fish \
+pacstrap -i /mnt --noconfirm base base-devel linux linux-headers git nano fish \
     intel-ucode networkmanager efibootmgr \
     pipewire-pulse bluez bluez-utils \
     gnu-free-fonts ttf-droid piper noto-fonts-emoji \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
-    mesa lib32-mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau nvtop \
+    mesa lib32-mesa xf86-video-amdgpu vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau nvtop linux-firmware-amdgpu \
     steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks ffnvcodec-headers \
-    plasma-meta kde-applications-meta packagekit-qt6 fwupd flatpak \
-    libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs mtools \
+    plasma-meta kde-applications-meta packagekit-qt6 fwupd flatpak linux-firmware-realtek \
+    libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs mtools linux-firmware-intel \
     jre8-openjdk jre11-openjdk jre17-openjdk jre21-openjdk jre-openjdk wireless-regdb \
     system-config-printer cups vlc vlc-plugins-all discord gparted mkinitcpio python-pipx \
     exfat-utils r8168-lts x265 helvum foliate libde265 libmatroska kvazaar qbittorrent \
