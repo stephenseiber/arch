@@ -29,7 +29,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-headers git nano fish \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
     nvidia-open nvidia-open-lts lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia nvidia-settings  \
     lib32-vkd3d vkd3d opencl-nvidia libvdpau lib32-libvdpau libxnvctrl egl-wayland nvtop linux-firmware-nvidia \
-    steam-native-runtime ppsspp nvtop vulkan-tools wine-staging lutris winetricks ffnvcodec-headers \
+    ppsspp nvtop vulkan-tools wine-staging lutris winetricks ffnvcodec-headers \
     plasma-meta kde-applications-meta packagekit-qt6 fwupd flatpak linux-firmware-realtek \
     libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs mtools linux-firmware-intel \
     jre8-openjdk jre11-openjdk jre17-openjdk jre21-openjdk jre-openjdk wireless-regdb \
