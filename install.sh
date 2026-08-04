@@ -115,6 +115,7 @@ Description = Updating systemd-boot
 When = PostTransaction
 Exec = /usr/bin/bootctl update
 END
+mkdir -p /etc/pacman.d/hooks
 touch /etc/pacman.d/hooks/nvidia.hook
 tee -a /etc/pacman.d/hooks/nvidia.hook << END
 [Trigger]
