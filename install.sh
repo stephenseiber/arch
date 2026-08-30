@@ -105,7 +105,11 @@ END
 cd /tmp && touch panel-restart && echo '#!/bin/bash' > panel-restart && echo 'killall plasmashell;plasmashell &' >> panel-restart && chmod +x panel-restart && mv panel-restart /usr/bin/
 touch reflector-update && echo '#!/bin/bash' > reflector-update && echo 'sudo reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6' >> reflector-update && chmod +x reflector-update && mv reflector-update /usr/bin
 userdel -r temp
-systemctl enable NetworkManager sddm bluetooth cups
+
+systemctl enable NetworkManager
+systemctl enable plasmalogin
+systemctl enable bluetooth
+systemctl enable cups
 
 journalctl --vacuum-size=100M --vacuum-time=2weeks
 touch /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
