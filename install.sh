@@ -18,6 +18,11 @@ sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf # multilib
 sed -i "s/#MAKEFLAGS/MAKEFLAGS/g" /etc/makepkg.conf
 sed -i "s/-j2/-j6/g" /etc/makepkg.conf
 
+umount /mnt/boot
+LIVE_DISK=$(lsblk -no PKNAME $(findmnt -no SOURCE /run/archiso/bootmnt))
+BOOT_PART=$(lsblk -o NAME,FSTYPE -r | grep -v "$LIVE_DISK" | grep 'vfat' | awk '{print $1}' | head -n 1)
+mount -t vfat -o fmask=0027,dmask=0027 /dev/$BOOT_PART /mnt/boot
+
 reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6
 pacman -Syy
 pacman -Sy archlinux-keyring --noconfirm
@@ -28,7 +33,7 @@ pacstrap -i /mnt --noconfirm base base-devel linux linux-headers git nano fish \
     gnu-free-fonts ttf-droid piper noto-fonts-emoji \
     pavucontrol ntfs-3g openssh python-pip wget reflector \
     nvidia-open nvidia-open-lts lib32-nvidia-utils nvidia-utils lib32-opencl-nvidia nvidia-settings  \
-    lib32-vkd3d vkd3d opencl-nvidia libvdpau lib32-libvdpau libxnvctrl egl-wayland nvtop linux-firmware-nvidia \
+    lib32-vkd3d vkd3d opencl-nvidia libvdpau libxnvctrl egl-wayland nvtop linux-firmware-nvidia \
     ppsspp nvtop vulkan-tools wine-staging lutris winetricks ffnvcodec-headers \
     plasma-meta kde-applications-meta packagekit-qt6 fwupd flatpak linux-firmware-realtek \
     libreoffice-fresh vivaldi vivaldi-ffmpeg-codecs mtools linux-firmware-intel \
@@ -98,7 +103,11 @@ END
 cd /tmp && touch panel-restart && echo '#!/bin/bash' > panel-restart && echo 'killall plasmashell;plasmashell &' >> panel-restart && chmod +x panel-restart && mv panel-restart /usr/bin/
 touch reflector-update && echo '#!/bin/bash' > reflector-update && echo 'sudo reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6' >> reflector-update && chmod +x reflector-update && mv reflector-update /usr/bin
 userdel -r temp
-systemctl enable NetworkManager sddm bluetooth cups
+
+systemctl enable NetworkManager
+systemctl enable plasmalogin
+systemctl enable bluetooth
+systemctl enable cups
 
 journalctl --vacuum-size=100M --vacuum-time=2weeks
 touch /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
