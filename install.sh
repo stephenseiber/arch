@@ -22,6 +22,11 @@ reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.
 pacman -Syy
 pacman -Sy archlinux-keyring --noconfirm
 
+umount /mnt/boot
+LIVE_DISK=$(lsblk -no PKNAME $(findmnt -no SOURCE /run/archiso/bootmnt))
+BOOT_PART=$(lsblk -o NAME,FSTYPE -r | grep -v "$LIVE_DISK" | grep 'vfat' | awk '{print $1}' | head -n 1)
+mount -t vfat -o fmask=0027,dmask=0027 /dev/$BOOT_PART /mnt/boot
+
 pacstrap -i /mnt --noconfirm base base-devel linux linux-headers git nano fish \
     intel-ucode networkmanager efibootmgr \
     pipewire-pulse bluez bluez-utils \
