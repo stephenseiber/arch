@@ -174,9 +174,9 @@ pacman-key --init
 pacman-key --populate archlinux
 #pipx install requests vdf
 sudo mkdir -p /home/$username\ cloud\ storage/
-sudo mkdir -p /home/$username\ mount/
+sudo mkdir -p /home/$username\ nas/
 sudo chown -R $username /home/$username\ cloud\ storage/
-sudo chown -R $username /home/$username\ mount/
+sudo chown -R $username /home/$username\ nas/
 sudo chown -R $username /home/$username/
 EOF
 
